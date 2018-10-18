@@ -1,12 +1,10 @@
 package droneManagementSystem;
 
-import droneManagementSystem.Client.WorkingBehaviour;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 
-public class Drone extends Agent {
-
-
+public class Client extends Agent {
+	
 
 	public void setup() {
 		addBehaviour(new WorkingBehaviour());
@@ -22,7 +20,7 @@ public class Drone extends Agent {
 		private int n = 0;
 		
 		public void action() {
-			System.out.println(++n + " I am doing something!");
+			System.out.println(++n + " Client doing something!");
 		}
 
 		public boolean done() {
