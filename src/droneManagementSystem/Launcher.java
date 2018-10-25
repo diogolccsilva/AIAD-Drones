@@ -8,7 +8,7 @@ import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
-public class launcher {
+public class Launcher {
 
 	public static void main(String[] args) {
 		Runtime rt = Runtime.instance();
