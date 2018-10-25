@@ -1,40 +1,63 @@
 package droneManagementSystem;
 
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
-import jade.core.behaviours.OneShotBehaviour;
+import jade.core.AID;
+import jade.core.behaviours.*;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class Client extends Agent {
 	
+
 	Integer xPosition;
 	Integer yPosition;
 	String articleName;
 	
 	private ClientGUI myGui;
+	
 
 	public void setup() {
 		// Create and show the GUI 
-		myGui = new ClientGUI(this);
-		myGui.showGui();
+				myGui = new ClientGUI(this);
+				myGui.showGui();
+		
+		addBehaviour(new TickerBehaviour(this, 3000) {
+			protected void onTick() {
+				String targetBookTitle ="asas";
+				System.out.println("Trying to buy "+targetBookTitle);
+				// Update the list of seller agents
+				DFAgentDescription template = new DFAgentDescription();
+				ServiceDescription sd = new ServiceDescription();
+				sd.setType("delivery-service");
+				template.addServices(sd);
+				try {
+					DFAgentDescription[] result = DFService.search(myAgent, template); 
+					System.out.println("Found the following seller agents:");
+					AID[] sellerAgents = new AID[result.length];
+					for (int i = 0; i < result.length; ++i) {
+						sellerAgents[i] = result[i].getName();
+						System.out.println(sellerAgents[i].getName());
+					}
+				}
+				catch (FIPAException fe) {
+					fe.printStackTrace();
+				}
+
+				
+			}
+		} );
 		
 	}
 	
 	public void takeDown() {
-		System.out.println(getLocalName() + ": done working.");
+	
+		System.out.println(getLocalName() + ": client killed");
 	}
 	
-	class WorkingBehaviour extends Behaviour {
-		private int n = 0;
-		
-		public void action() {
-			System.out.println(++n + " Client doing something!");
-		}
-
-		public boolean done() {
-			return n == 5;
-		}
-	}
-
 	public void setAttributes(Integer xPos, Integer yPos, String artc) {
 		addBehaviour(new OneShotBehaviour() {
 			public void action() {
@@ -44,6 +67,8 @@ public class Client extends Agent {
 				System.out.println("Client lauched article " + articleName);
 			}
 		} );		
+		System.out.println(getLocalName() + ": client killed");
 	}
+	
 
 }

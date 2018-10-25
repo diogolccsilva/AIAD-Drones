@@ -8,7 +8,7 @@ import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
-public class Launcher {
+public class launcher {
 
 	public static void main(String[] args) {
 		Runtime rt = Runtime.instance();
@@ -28,6 +28,13 @@ public class Launcher {
 			e.printStackTrace();
 		}
 		try {
+			AgentController ag2 = cc.createNewAgent("drone2","droneManagementSystem.Drone",args1);
+			ag2.start();
+		} catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
 			AgentController ag2 = cc.createNewAgent("client1","droneManagementSystem.Client",args1);
 			ag2.start();
 		} catch (StaleProxyException e) {
@@ -35,6 +42,8 @@ public class Launcher {
 			e.printStackTrace();
 		}
 		
+		
+		/**
 		AgentController ac3;
 		try {
 			ac3 = cc.acceptNewAgent("myRMA", new jade.tools.rma.rma());
@@ -42,6 +51,7 @@ public class Launcher {
 		} catch (StaleProxyException e) {
 			e.printStackTrace();
 		}
+		*/
 	
 
 		

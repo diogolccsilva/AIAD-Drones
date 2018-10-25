@@ -1,33 +1,40 @@
 package droneManagementSystem;
 
-import droneManagementSystem.Client.WorkingBehaviour;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class Drone extends Agent {
 
 
-
 	public void setup() {
-		addBehaviour(new WorkingBehaviour());
 		
-		System.out.println(getLocalName() + ": starting to work!");
+		System.out.println(getLocalName() + ": drone created");
+		DFAgentDescription dfd = new DFAgentDescription();
+		dfd.setName(getAID());
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("delivery-service");
+		sd.setName("AMAZON");
+		dfd.addServices(sd);
+		try {
+			DFService.register(this, dfd);
+		} catch (FIPAException fe) {
+			fe.printStackTrace();
+		}
 	}
 	
 	public void takeDown() {
-		System.out.println(getLocalName() + ": done working.");
+		try {
+			DFService.deregister(this);
+		} catch (FIPAException e) {
+			e.printStackTrace();
+		}
+		System.out.println(getLocalName() + ": drone killed");
 	}
 	
-	class WorkingBehaviour extends Behaviour {
-		private int n = 0;
-		
-		public void action() {
-			System.out.println(++n + " I am doing something!");
-		}
-
-		public boolean done() {
-			return n == 5;
-		}
-	}
+	
 
 }

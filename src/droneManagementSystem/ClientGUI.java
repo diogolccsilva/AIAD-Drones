@@ -65,7 +65,7 @@ class ClientGUI extends JFrame {
 					Integer xPos = Integer.parseInt(xField.getText().trim());
 					Integer yPos = Integer.parseInt(yField.getText().trim());
 					String artc = articleField.getText().trim();
-					myAgent.setAttributes(xPos, yPos, artc);
+					//myAgent.setAttributes(xPos, yPos, artc);
 					xField.setText("");
 					yField.setText("");
 					window.dispose();
