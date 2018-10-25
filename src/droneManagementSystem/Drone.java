@@ -12,7 +12,7 @@ import jade.lang.acl.MessageTemplate;
 
 public class Drone extends Agent {
 	
-	private int price = 12;
+	private int distance = 12;
 
 
 	public void setup() {
@@ -53,10 +53,10 @@ public class Drone extends Agent {
 				ACLMessage reply = msg.createReply();
 				
 				
-				if (price != 0) {
-					// The requested book is available for sale. Reply with the price
+				if (distance != 0) {
+					// The requested book is available for sale. Reply with the distance
 					reply.setPerformative(ACLMessage.PROPOSE);
-					reply.setContent(String.valueOf(price));
+					reply.setContent(String.valueOf(distance));
 				}
 				else {
 					// The requested book is NOT available for sale.

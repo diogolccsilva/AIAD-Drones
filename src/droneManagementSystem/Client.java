@@ -19,7 +19,7 @@ public class Client extends Agent {
 	
 	private ClientGUI myGui;
 	
-	private String targetBookTitle ="ENCOMENDA";
+	private String msg ="ENCOMENDA";
 	
 	
 	// The list of known drone agents
@@ -31,7 +31,8 @@ public class Client extends Agent {
 		// Create and show the GUI 
 			//	myGui = new ClientGUI(this);
 			//	myGui.showGui();
-		
+		System.out.println("Client created");
+
 		addBehaviour(new TickerBehaviour(this, 3000) {
 			protected void onTick() {
 				System.out.println("Looking to send a package");
@@ -69,12 +70,11 @@ public class Client extends Agent {
 	
 	/**
 	   Inner class RequestPerformer.
-	   This is the behaviour used by Book-buyer agents to request seller 
-	   agents the target book.
+	   This is the behaviour used by Book-buyer agents to request drone agents 
 	 */
 	private class RequestPerformer extends Behaviour {
-		private AID bestSeller; // The agent who provides the best offer 
-		private int bestPrice;  // The best offered price
+		private AID bestDrone; // The agent who provides the best offer 
+		private int bestDistance;  // The best offered price
 		private int repliesCnt = 0; // The counter of replies from seller agents
 		private MessageTemplate mt; // The template to receive replies
 		private int step = 0;
@@ -82,12 +82,12 @@ public class Client extends Agent {
 		public void action() {
 			switch (step) {
 			case 0:
-				// Send the cfp to all sellers
+				// Send the cfp to all drones
 				ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
 				for (int i = 0; i < drones.length; ++i) {
 					cfp.addReceiver(drones[i]);
 				} 
-				cfp.setContent(targetBookTitle);
+				cfp.setContent(msg);
 				cfp.setConversationId("delivery");
 				cfp.setReplyWith("cfp"+System.currentTimeMillis()); // Unique value
 				myAgent.send(cfp);
@@ -97,18 +97,18 @@ public class Client extends Agent {
 				step = 1;
 				break;
 			case 1:
-				// Receive all proposals/refusals from seller agents
+				// Receive all proposals/refusals from drone agents
 				ACLMessage reply = myAgent.receive(mt);
 				if (reply != null) {
 					// Reply received
 					if (reply.getPerformative() == ACLMessage.PROPOSE) {
 						// This is an offer 
-						int price = Integer.parseInt(reply.getContent());
-						System.out.println("Resposta do drone com Preco: "+ price);
-						if (bestSeller == null || price < bestPrice) {
+						int distance = Integer.parseInt(reply.getContent());
+						System.out.println("Resposta do drone distancia: "+ distance);
+						if (bestDrone == null || distance < bestDistance) {
 							// This is the best offer at present
-							bestPrice = price;
-							bestSeller = reply.getSender();
+							bestDistance = distance;
+							bestDrone = reply.getSender();
 						}
 					}
 					repliesCnt++;
@@ -124,8 +124,8 @@ public class Client extends Agent {
 			case 2:
 				// Send the purchase order to the seller that provided the best offer
 				ACLMessage order = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
-				order.addReceiver(bestSeller);
-				order.setContent(targetBookTitle);
+				order.addReceiver(bestDrone);
+				order.setContent(msg);
 				order.setConversationId("delivery");
 				order.setReplyWith("order"+System.currentTimeMillis());
 				myAgent.send(order);
@@ -141,12 +141,12 @@ public class Client extends Agent {
 					// Purchase order reply received
 					if (reply.getPerformative() == ACLMessage.INFORM) {
 						// Purchase successful. We can terminate
-						System.out.println(targetBookTitle+" successfully purchased from agent "+reply.getSender().getName());
-						System.out.println("Price = "+bestPrice);
+						System.out.println(msg+" successfully purchased from agent "+reply.getSender().getName());
+						System.out.println("Distancia = "+bestDistance);
 						myAgent.doDelete();
 					}
 					else {
-						System.out.println("Attempt failed: requested book already sold.");
+						System.out.println("Attempt failed.");
 					}
 
 					step = 4;
@@ -159,10 +159,10 @@ public class Client extends Agent {
 		}
 
 		public boolean done() {
-			if (step == 2 && bestSeller == null) {
-				System.out.println("Attempt failed: "+targetBookTitle+" not available for sale");
+			if (step == 2 && bestDrone == null) {
+				System.out.println("Attempt failed: "+msg);
 			}
-			return ((step == 2 && bestSeller == null) || step == 4);
+			return ((step == 2 && bestDrone == null) || step == 4);
 		}
 	}  // End of inner class RequestPerformer
 	
@@ -172,7 +172,7 @@ public class Client extends Agent {
 				xPosition = xPos;
 				yPosition = yPos;
 				articleName = artc;
-				System.out.println("Client launched article " + articleName);
+				System.out.println("Client lauched article " + articleName);
 			}
 		} );		
 		System.out.println(getLocalName() + ": client killed");
