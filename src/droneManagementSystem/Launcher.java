@@ -36,13 +36,19 @@ public class Launcher {
 			e.printStackTrace();
 		}
 		try {
-			AgentController ag2 = cc.createNewAgent("client1","droneManagementSystem.Client",args1);
+			AgentController ag2 = cc.createNewAgent("drone2","droneManagementSystem.Drone",args1);
 			ag2.start();
 		} catch (StaleProxyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+		try {
+			AgentController ag2 = cc.createNewAgent("client1","droneManagementSystem.Client",args1);
+			ag2.start();
+		} catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 
 		
 	}
