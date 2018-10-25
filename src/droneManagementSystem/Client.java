@@ -41,7 +41,7 @@ public class Client extends Agent {
 				xPosition = xPos;
 				yPosition = yPos;
 				articleName = artc;
-				System.out.println("Client lauched article " + articleName);
+				System.out.println("Client launched article " + articleName);
 			}
 		} );		
 	}
