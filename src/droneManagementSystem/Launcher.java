@@ -43,7 +43,6 @@ public class Launcher {
 		}
 		
 		
-		/**
 		AgentController ac3;
 		try {
 			ac3 = cc.acceptNewAgent("myRMA", new jade.tools.rma.rma());
@@ -51,8 +50,6 @@ public class Launcher {
 		} catch (StaleProxyException e) {
 			e.printStackTrace();
 		}
-		*/
-	
 
 		
 	}

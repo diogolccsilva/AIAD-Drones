@@ -45,8 +45,9 @@ public class Drone extends Agent {
 	
 	private class OfferRequestsServer extends CyclicBehaviour {
 		public void action() {
-			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
-			ACLMessage msg = myAgent.receive(mt);
+			MessageTemplate mt1 = MessageTemplate.MatchPerformative(ACLMessage.CFP);
+			MessageTemplate mt2 = MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
+			ACLMessage msg = myAgent.receive(mt1);
 			if (msg != null) {
 				// CFP Message received. Process it
 				String title = msg.getContent();
@@ -65,12 +66,27 @@ public class Drone extends Agent {
 				}
 				myAgent.send(reply);
 			}
+			else if ((msg = myAgent.receive(mt2)) != null){
+				// ACCEPT_PROPOSAL Message received. Process it
+				String title = msg.getContent();
+				ACLMessage reply = msg.createReply();
+
+				Integer price = 5;
+				if (price != null) {
+					reply.setPerformative(ACLMessage.INFORM);
+					System.out.println(title+" drone para cliente "+msg.getSender().getName());
+				}
+				else {
+					// The requested book has been sold to another buyer in the meanwhile .
+					reply.setPerformative(ACLMessage.FAILURE);
+					reply.setContent("not-available");
+				}
+				myAgent.send(reply);
+			}
 			else {
 				block();
 			}
 		}
-	}  // End of inner class OfferRequestsServer
-	
-	
+	}  // End of inner class OfferRequestsServer			
 
 }

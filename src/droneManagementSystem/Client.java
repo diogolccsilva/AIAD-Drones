@@ -19,7 +19,7 @@ public class Client extends Agent {
 	
 	private ClientGUI myGui;
 	
-	private String msg ="ENCOMENDA";
+	private String msg = "ENCOMENDA";
 	
 	
 	// The list of known drone agents
@@ -74,7 +74,7 @@ public class Client extends Agent {
 	 */
 	private class RequestPerformer extends Behaviour {
 		private AID bestDrone; // The agent who provides the best offer 
-		private int bestDistance;  // The best offered price
+		private int bestDistance = Integer.MAX_VALUE;  // The best offered price
 		private int repliesCnt = 0; // The counter of replies from seller agents
 		private MessageTemplate mt; // The template to receive replies
 		private int step = 0;
@@ -174,8 +174,7 @@ public class Client extends Agent {
 				articleName = artc;
 				System.out.println("Client lauched article " + articleName);
 			}
-		} );		
-		System.out.println(getLocalName() + ": client killed");
+		} );
 	}
 	
 
