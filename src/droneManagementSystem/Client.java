@@ -13,8 +13,8 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 public class Client extends Agent {
 	
 
-	Integer xPosition;
-	Integer yPosition;
+	int xPosition;
+	int yPosition;
 	String articleName;
 	
 	private ClientGUI myGui;
@@ -32,6 +32,7 @@ public class Client extends Agent {
 			//	myGui = new ClientGUI(this);
 			//	myGui.showGui();
 		System.out.println("Client created");
+		setAttributes(1, 1, "artigo");
 
 		addBehaviour(new TickerBehaviour(this, 3000) {
 			protected void onTick() {
@@ -74,7 +75,7 @@ public class Client extends Agent {
 	 */
 	private class RequestPerformer extends Behaviour {
 		private AID bestDrone; // The agent who provides the best offer 
-		private int bestDistance = Integer.MAX_VALUE;  // The best offered price
+		private double bestDistance = Double.MAX_VALUE;  // The best offered price
 		private int repliesCnt = 0; // The counter of replies from seller agents
 		private MessageTemplate mt; // The template to receive replies
 		private int step = 0;
@@ -87,7 +88,7 @@ public class Client extends Agent {
 				for (int i = 0; i < drones.length; ++i) {
 					cfp.addReceiver(drones[i]);
 				} 
-				cfp.setContent(msg);
+				cfp.setContent(xPosition + ";" + yPosition);
 				cfp.setConversationId("delivery");
 				cfp.setReplyWith("cfp"+System.currentTimeMillis()); // Unique value
 				myAgent.send(cfp);
@@ -103,7 +104,7 @@ public class Client extends Agent {
 					// Reply received
 					if (reply.getPerformative() == ACLMessage.PROPOSE) {
 						// This is an offer 
-						int distance = Integer.parseInt(reply.getContent());
+						double distance = Double.parseDouble(reply.getContent());
 						System.out.println("Resposta do drone distancia: "+ distance);
 						if (bestDrone == null || distance < bestDistance) {
 							// This is the best offer at present

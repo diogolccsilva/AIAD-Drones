@@ -1,5 +1,7 @@
 package droneManagementSystem;
 
+import java.util.Random;
+
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
@@ -12,8 +14,8 @@ import jade.lang.acl.MessageTemplate;
 
 public class Drone extends Agent {
 	
-	private int distance = 12;
-
+	int xPosition;
+	int yPosition;
 
 	public void setup() {
 		
@@ -29,6 +31,10 @@ public class Drone extends Agent {
 		} catch (FIPAException fe) {
 			fe.printStackTrace();
 		}
+		
+		Random r = new Random();
+		xPosition = r.nextInt(20);
+		yPosition = r.nextInt(20);
 		
 		addBehaviour(new OfferRequestsServer());
 
@@ -50,10 +56,14 @@ public class Drone extends Agent {
 			ACLMessage msg = myAgent.receive(mt1);
 			if (msg != null) {
 				// CFP Message received. Process it
-				String title = msg.getContent();
+				String msgPos[] = msg.getContent().split(";", 2);
 				ACLMessage reply = msg.createReply();
+				int clientPos[] = new int[2];
+				for (int i = 0; i < clientPos.length; i++)
+					clientPos[i] = Integer.parseInt(msgPos[i]);
 				
 				
+				double distance = Math.sqrt(Math.pow(xPosition - clientPos[0], 2) + Math.pow(yPosition - clientPos[1], 2));
 				if (distance != 0) {
 					// The requested book is available for sale. Reply with the distance
 					reply.setPerformative(ACLMessage.PROPOSE);
