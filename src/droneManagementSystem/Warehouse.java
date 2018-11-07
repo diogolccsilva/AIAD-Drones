@@ -1,9 +1,7 @@
 package droneManagementSystem;
 
 import java.awt.Point;
-import java.awt.geom.Point2D;
 import java.util.Vector;
-
 
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -18,7 +16,11 @@ public class Warehouse extends Agent {
 	
 	private Point coords;
 	
-	private Vector<Package> packagesToSend;
+	private Vector<String> products;
+	
+	private double distance=12;
+	
+	
 
 	
 	public void setup() {
@@ -26,8 +28,6 @@ public class Warehouse extends Agent {
 		
 		System.out.println(getLocalName() + ": Warehouse created at coords: "+coords);
 		DFAgentDescription dfd = new DFAgentDescription();
-		
-		
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType("storing-service");
@@ -39,7 +39,7 @@ public class Warehouse extends Agent {
 			fe.printStackTrace();
 		}
 		
-		addBehaviour(new ListeningBehaviour(this));
+		addBehaviour(new OfferRequestsServer());
 	}
 	
 	public void takeDown() {
@@ -51,31 +51,51 @@ public class Warehouse extends Agent {
 		System.out.println(getLocalName() + ": drone killed");
 	}
 	
-	private class ListeningBehaviour extends CyclicBehaviour {
-		private static final long serialVersionUID = 1L;
-		MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
-		public Warehouse agent;
-
-		public ListeningBehaviour(Agent a) {
-			super(a);
-			this.agent = (Warehouse) a;
-		}
-
-			
-			public void action() {
-				MessageTemplate mt1 = MessageTemplate.MatchPerformative(ACLMessage.CFP);
-				MessageTemplate mt2 = MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
-				ACLMessage msg = myAgent.receive(mt1);
+	private class OfferRequestsServer extends CyclicBehaviour {
+		public void action() {
+			MessageTemplate mt1 = MessageTemplate.MatchPerformative(ACLMessage.CFP);
+			MessageTemplate mt2 = MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
+			ACLMessage msg = myAgent.receive(mt1);
+			if (msg != null) {
+				// CFP Message received. Process it
+				String title = msg.getContent();
+				ACLMessage reply = msg.createReply();
 				
-				if(msg!=null)
-				System.out.println("msg from drone received:"+msg);
 				
-			}	
-			
-			
-		
+				if (distance != 0) {
+					// The requested book is available for sale. Reply with the distance
+					reply.setPerformative(ACLMessage.PROPOSE);
+					reply.setContent(String.valueOf(distance));
+				}
+				else {
+					// The requested book is NOT available for sale.
+					reply.setPerformative(ACLMessage.REFUSE);
+					reply.setContent("not-available");
+				}
+				myAgent.send(reply);
+			}
+			else if ((msg = myAgent.receive(mt2)) != null){
+				// ACCEPT_PROPOSAL Message received. Process it
+				String title = msg.getContent();
+				ACLMessage reply = msg.createReply();
+
+				Integer price = 5;
+				if (price != null) {
+					reply.setPerformative(ACLMessage.INFORM);
+					System.out.println(title+" drone para cliente "+msg.getSender().getName());
+				}
+				else {
+					// The requested book has been sold to another buyer in the meanwhile .
+					reply.setPerformative(ACLMessage.FAILURE);
+					reply.setContent("not-available");
+				}
+				myAgent.send(reply);
+			}
+			else {
+				block();
+			}
 		}
-		
+	}  // End of inner class OfferRequestsServer			
 
 
 
@@ -88,6 +108,17 @@ public class Warehouse extends Agent {
 	}
 
 
+	public Vector<String> getProducts() {
+		return products;
+	}
+
+
+	public void setProducts(Vector<String> products) {
+		this.products = products;
+	}
+	
+	
+	
 	
 
 }
