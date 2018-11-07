@@ -1,5 +1,9 @@
 package droneManagementSystem;
 
+
+import java.awt.Point;
+import java.awt.geom.Point2D;
+
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
@@ -12,12 +16,14 @@ import jade.lang.acl.MessageTemplate;
 
 public class Drone extends Agent {
 	
-	private int distance = 12;
-
+	private int distance;
+	
+	private Point coords = new Point(1,1);
+	
 
 	public void setup() {
 		
-		System.out.println(getLocalName() + ": drone created");
+		System.out.println(getLocalName() + ": drone created--coords: "+coords);
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
@@ -51,6 +57,24 @@ public class Drone extends Agent {
 			if (msg != null) {
 				// CFP Message received. Process it
 				String title = msg.getContent();
+				
+				System.out.println("msg received= "+title);
+
+				String[] parts = title.split(",");
+				
+				double n1 = Double.parseDouble(parts[0]);
+				double n2 = Double.parseDouble(parts[1]);
+				double n3 = Double.parseDouble(parts[2]);
+				double n4 = Double.parseDouble(parts[3]);
+
+				
+			      Point2D.Double p1 = new Point2D.Double(n1, n2);
+				  Point2D.Double p2 = new Point2D.Double(n3, n4);
+				   
+				 distance=  (int) p1.distance(p2); // change this so it doesnt lose accuracy
+				  
+			      System.out.println("distance="+distance);
+
 				ACLMessage reply = msg.createReply();
 				
 				
@@ -74,7 +98,7 @@ public class Drone extends Agent {
 				Integer price = 5;
 				if (price != null) {
 					reply.setPerformative(ACLMessage.INFORM);
-					System.out.println(title+" drone para cliente "+msg.getSender().getName());
+					System.out.println("Drone:"+myAgent.getName()+" escolhido");
 				}
 				else {
 					// The requested book has been sold to another buyer in the meanwhile .
@@ -87,6 +111,8 @@ public class Drone extends Agent {
 				block();
 			}
 		}
+
+		
 	}  // End of inner class OfferRequestsServer			
 
 }

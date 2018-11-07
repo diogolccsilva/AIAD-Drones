@@ -1,6 +1,10 @@
 package droneManagementSystem;
 
 import jade.core.Agent;
+
+import java.awt.Point;
+import java.util.Vector;
+
 import jade.core.AID;
 import jade.core.behaviours.*;
 import jade.lang.acl.ACLMessage;
@@ -13,16 +17,17 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 public class Client extends Agent {
 	
 
-	Integer xPosition;
-	Integer yPosition;
-	String articleName;
+	private Point coords;
+	
+	private Vector<Package> orders = new Vector<Package>();
+	
+	private String articleName;
 	
 	private ClientGUI myGui;
 	
-	private String msg = "ENCOMENDA";
+	private String msg;
 	
-	
-	// The list of known drone agents
+	// The list of known warehouse agents
 	private AID[] drones;
 
 	
@@ -31,27 +36,46 @@ public class Client extends Agent {
 		// Create and show the GUI 
 			//	myGui = new ClientGUI(this);
 			//	myGui.showGui();
-		System.out.println("Client created");
+		
+		this.coords= new Point(1,1);
+		System.out.println("Client created at "+this.coords);
+		
+		Point p1= new Point(1,1);
+		Point p2= new Point(3,3);
+
+		
+		
+		Package pac1 = new Package(2,p2);
+		
+		this.orders.add(pac1);
+		
+		this.msg = this.coords.getX()+","+this.coords.getY() + ","+this.orders.elementAt(0).getDest().getX()+ ","+this.orders.elementAt(0).getDest().getY();
+
+		System.out.println("order: "+this.msg);
+		
+
 
 		addBehaviour(new TickerBehaviour(this, 3000) {
 			protected void onTick() {
-				System.out.println("Looking to send a package");
-				// Update the list of drone agents
+				System.out.println("Looking to send package");
+				// Update the list of warehouse agents
 				DFAgentDescription template = new DFAgentDescription();
 				ServiceDescription sd = new ServiceDescription();
 				sd.setType("delivery-service");
 				template.addServices(sd);
 				try {
 					DFAgentDescription[] result = DFService.search(myAgent, template); 
-					System.out.println("Found the following drone agents:");
+					System.out.println("Found the following Drone agents:");
 					 drones = new AID[result.length];
-					for (int i = 0; i < result.length; ++i) {
+					for (int i = 0; i < result.length; i++) {
 						drones[i] = result[i].getName();
 						System.out.println(drones[i].getName());
 					}
 				}
 				catch (FIPAException fe) {
 					fe.printStackTrace();
+					System.out.println("No drones found!");
+
 				}
 
 				myAgent.addBehaviour(new RequestPerformer());
@@ -70,11 +94,11 @@ public class Client extends Agent {
 	
 	/**
 	   Inner class RequestPerformer.
-	   This is the behaviour used by Book-buyer agents to request drone agents 
+	   This is the behaviour used by client-buyer agents to request warehouse agents 
 	 */
 	private class RequestPerformer extends Behaviour {
 		private AID bestDrone; // The agent who provides the best offer 
-		private int bestDistance = Integer.MAX_VALUE;  // The best offered price
+		private double bestDistance = Double.MAX_VALUE;  // The best offered price
 		private int repliesCnt = 0; // The counter of replies from seller agents
 		private MessageTemplate mt; // The template to receive replies
 		private int step = 0;
@@ -88,11 +112,11 @@ public class Client extends Agent {
 					cfp.addReceiver(drones[i]);
 				} 
 				cfp.setContent(msg);
-				cfp.setConversationId("delivery");
+				cfp.setConversationId("send");
 				cfp.setReplyWith("cfp"+System.currentTimeMillis()); // Unique value
 				myAgent.send(cfp);
 				// Prepare the template to get proposals
-				mt = MessageTemplate.and(MessageTemplate.MatchConversationId("delivery"),
+				mt = MessageTemplate.and(MessageTemplate.MatchConversationId("send"),
 						MessageTemplate.MatchInReplyTo(cfp.getReplyWith()));
 				step = 1;
 				break;
@@ -141,9 +165,9 @@ public class Client extends Agent {
 					// Purchase order reply received
 					if (reply.getPerformative() == ACLMessage.INFORM) {
 						// Purchase successful. We can terminate
-						System.out.println(msg+" successfully purchased from agent "+reply.getSender().getName());
-						System.out.println("Distancia = "+bestDistance);
-						myAgent.doDelete();
+						System.out.println(myAgent.getName()+" successfully called from agent "+reply.getSender().getName());
+						System.out.println("com Distancia = "+bestDistance);
+						//myAgent.doDelete();
 					}
 					else {
 						System.out.println("Attempt failed.");
@@ -169,12 +193,36 @@ public class Client extends Agent {
 	public void setAttributes(Integer xPos, Integer yPos, String artc) {
 		addBehaviour(new OneShotBehaviour() {
 			public void action() {
-				xPosition = xPos;
-				yPosition = yPos;
+				coords.x = xPos;
+				coords.y = yPos;
 				articleName = artc;
 				System.out.println("Client lauched article " + articleName);
 			}
 		} );
+	}
+
+	public Point getCoords() {
+		return coords;
+	}
+
+	public void setCoords(Point coords) {
+		this.coords = coords;
+	}
+
+	public Vector<Package> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Vector<Package> orders) {
+		this.orders = orders;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 	
 

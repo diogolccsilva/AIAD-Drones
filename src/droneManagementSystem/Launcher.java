@@ -35,14 +35,29 @@ public class Launcher {
 			e.printStackTrace();
 		}
 		try {
-			AgentController ag2 = cc.createNewAgent("client1","droneManagementSystem.Client",args1);
-			ag2.start();
+			AgentController ag3 = cc.createNewAgent("client1","droneManagementSystem.Client",args1);
+			ag3.start();
+		} catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			AgentController ag4 = cc.createNewAgent("warehouse1","droneManagementSystem.Warehouse",args1);
+			ag4.start();
+		} catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			AgentController ag5 = cc.createNewAgent("warehouse2","droneManagementSystem.Warehouse",args1);
+			ag5.start();
 		} catch (StaleProxyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		
+		/*
 		AgentController ac3;
 		try {
 			ac3 = cc.acceptNewAgent("myRMA", new jade.tools.rma.rma());
@@ -50,7 +65,7 @@ public class Launcher {
 		} catch (StaleProxyException e) {
 			e.printStackTrace();
 		}
-
+*/
 		
 	}
 
