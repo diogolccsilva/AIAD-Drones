@@ -55,7 +55,7 @@ public class Client extends Agent {
 		
 
 
-		addBehaviour(new TickerBehaviour(this, 3000) {
+		addBehaviour(new TickerBehaviour(this, 10000) {
 			protected void onTick() {
 				System.out.println("Looking to send package");
 				// Update the list of warehouse agents
@@ -165,8 +165,7 @@ public class Client extends Agent {
 					// Purchase order reply received
 					if (reply.getPerformative() == ACLMessage.INFORM) {
 						// Purchase successful. We can terminate
-						System.out.println(myAgent.getName()+" successfully called from agent "+reply.getSender().getName());
-						System.out.println("com Distancia = "+bestDistance);
+						System.out.println(myAgent.getName()+" successfully called from agent "+reply.getSender().getName()+"com Distancia = "+bestDistance);
 						//myAgent.doDelete();
 					}
 					else {
