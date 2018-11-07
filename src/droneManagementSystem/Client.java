@@ -51,7 +51,7 @@ public class Client extends Agent {
 		
 		this.msg = this.coords.getX()+","+this.coords.getY() + ","+this.orders.elementAt(0).getDest().getX()+ ","+this.orders.elementAt(0).getDest().getY();
 
-		System.out.println("order: "+this.msg);
+		//System.out.println("order: "+this.msg);
 		
 
 
