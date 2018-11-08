@@ -1,6 +1,6 @@
 package deliveryPackage;
 
-import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import client.Client;
 
@@ -17,11 +17,11 @@ public class Package {
 		this.size = size;
 	}
 	
-	public Point getDestination() {
+	public Point2D getDestination() {
 		return sender.getLocation();
 	}
 	
-	public Point getSource() {
+	public Point2D getSource() {
 		return receiver.getLocation();
 	}
 	
