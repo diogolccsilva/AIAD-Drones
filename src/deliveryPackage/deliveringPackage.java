@@ -26,7 +26,12 @@ public class deliveringPackage extends Behaviour {
 
 	@Override
 	public boolean done() {
-		return ((Drone)this.myAgent).getCurrentPosition() ==  ;
+		return checkPosition();
+	}
+	
+	public boolean checkPosition() {
+		//((Drone)this.myAgent).getCurrentPosition() == 
+		return false;
 	}
 
 }

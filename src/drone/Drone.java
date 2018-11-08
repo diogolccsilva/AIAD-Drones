@@ -7,12 +7,16 @@ import request.*;
 
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class Drone extends Agent {
 	
 	private TreeSet<Request> requests;
 	
-	private Point position;
+	private Point2D position;
 	private float weightCapacity;
 	private float baseVelocity;
 
@@ -31,9 +35,9 @@ public class Drone extends Agent {
 			fe.printStackTrace();
 		}
 		
-		Random r = new Random();
+		/* r = new Random();
 		xPosition = r.nextInt(20);
-		yPosition = r.nextInt(20);
+		yPosition = r.nextInt(20);*/
 		
 		addBehaviour(new OfferRequestsServer());
 
@@ -48,7 +52,7 @@ public class Drone extends Agent {
 		System.out.println(getLocalName() + ": drone killed");
 	}
 
-	public Point getCurrentPosition() {
+	public Point2D getCurrentPosition() {
 		return position;
 	}
 	
