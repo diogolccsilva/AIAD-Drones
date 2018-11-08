@@ -1,9 +1,11 @@
 package request;
 
+import deliveryPackage.DeliveryPackage;
+
 public class PickupRequest extends Request {
 
-	public PickupRequest() {
-		// TODO Auto-generated constructor stub
+	public PickupRequest(DeliveryPackage dPackage) {
+		super(dPackage);
 	}
 
 }

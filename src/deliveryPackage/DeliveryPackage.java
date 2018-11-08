@@ -4,13 +4,13 @@ import java.awt.geom.Point2D;
 
 import client.Client;
 
-public class Package {
+public class DeliveryPackage {
 
 	private Client receiver, sender;
 	private float weight;
 	private float size; //size in L or dm3
 	
-	public Package(Client sender, Client receiver, float weight, float size) {
+	public DeliveryPackage(Client sender, Client receiver, float weight, float size) {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.weight = weight;

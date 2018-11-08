@@ -1,9 +1,11 @@
 package request;
 
+import deliveryPackage.DeliveryPackage;
+
 public class DeliverRequest extends Request {
 
-	public DeliverRequest() {
-		// TODO Auto-generated constructor stub
+	public DeliverRequest(DeliveryPackage dPackage) {
+		super(dPackage);
 	}
 
 }
