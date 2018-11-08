@@ -1,0 +1,2 @@
+warehouse1;12,12
+warehouse2;4,7

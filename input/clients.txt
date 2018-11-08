@@ -1,0 +1,3 @@
+Client1;1,1
+Client2;12,12
+Client3;5,5
