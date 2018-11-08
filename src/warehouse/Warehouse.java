@@ -8,8 +8,14 @@ public class Warehouse extends Agent {
 
 	private Point location;
 	
-	public Warehouse(Point location) {
-		this.location = location;
+	public void setup(){
+		System.out.println("Warehouse created");
+		Object[] args = getArguments();
+        //double xPostion = args[0].;
+	}
+	
+	public void takeDown() {
+		System.out.println(getLocalName() + ": warehouse killed");
 	}
 	
 	public Point getLocation() {
