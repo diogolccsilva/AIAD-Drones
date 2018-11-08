@@ -1,9 +1,13 @@
 package request;
 
-public class Request {
+import deliveryPackage.DeliveryPackage;
 
-	public Request() {
-		// TODO Auto-generated constructor stub
+public class Request {
+	
+	private DeliveryPackage deliveryPackage;
+	
+	public Request(DeliveryPackage deliveryPackage) {
+		this.deliveryPackage = deliveryPackage;
 	}
 
 }
