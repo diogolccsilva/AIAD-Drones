@@ -1,7 +1,9 @@
 package warehouse;
 
 import java.awt.geom.Point2D;
+import java.util.Queue;
 
+import deliveryPackage.DeliveryPackage;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -11,6 +13,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 public class Warehouse extends Agent {
 
 	private Point2D location;
+	private Queue<DeliveryPackage> deliveries;
 	
 	public void setup(){
 		System.out.println(getLocalName() + ": warehouse created");
@@ -21,8 +24,7 @@ public class Warehouse extends Agent {
         
         registerWarehouseService();
         
-        //todo: adding behaviours
-        
+        addBehaviour(new GenerateWarehouseRequestsBehaviour());
         
 	}
 	
