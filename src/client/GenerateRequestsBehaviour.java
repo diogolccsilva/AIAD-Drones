@@ -7,10 +7,12 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import request.*;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 import deliveryPackage.DeliveryPackage;
+import drone.Drone;
 
 public class GenerateRequestsBehaviour extends TickerBehaviour {
 
@@ -29,11 +31,14 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 			double weight = 0;
 			double size = 0;
 			DeliveryPackage nPackage = new DeliveryPackage(sender, receiver, weight, size);
+			
+			Request request = new PickupRequest(nPackage);
 			System.out.println(this.myAgent.getLocalName() + ": new request created");
-
-			AID[] drones = getDrones();
+			
+			AID[] drones = Drone.getDrones(myAgent);
 			if (drones.length > 0) {
 				System.out.println(this.myAgent.getLocalName() + ": sending request to drones");
+				//need help
 			}
 			else {
 				System.out.println(this.myAgent.getLocalName() + ": no drones were found");
@@ -41,24 +46,5 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 			return;
 		}
 		System.out.println(this.myAgent.getLocalName() + ": no request was generated");
-	}
-
-	public AID[] getDrones() {
-		AID[] drones = new AID[0];
-		DFAgentDescription template = new DFAgentDescription();
-		ServiceDescription sd = new ServiceDescription();
-		sd.setType("delivery-service");
-		template.addServices(sd);
-		try {
-			DFAgentDescription[] result = DFService.search(myAgent, template);
-			System.out.println("Found the following drone agents:");
-			drones = new AID[result.length];
-			for (int i = 0; i < result.length; ++i) {
-				drones[i] = result[i].getName();
-			}
-		} catch (FIPAException fe) {
-			fe.printStackTrace();
-		}
-		return drones;
 	}
 }

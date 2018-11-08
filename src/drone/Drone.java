@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.TreeSet;
 
 import request.*;
-
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.domain.DFService;
@@ -20,6 +20,25 @@ public class Drone extends Agent {
 	private float weightCapacity;
 	private float baseVelocity;
 
+	public static AID[] getDrones(Agent agent) {
+		AID[] drones = new AID[0];
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("delivery-service");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(agent, template);
+			System.out.println("Found the following drone agents:");
+			drones = new AID[result.length];
+			for (int i = 0; i < result.length; ++i) {
+				drones[i] = result[i].getName();
+			}
+		} catch (FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return drones;
+	}
+	
 	public void setup() {
 		
 		System.out.println(getLocalName() + ": drone created");
