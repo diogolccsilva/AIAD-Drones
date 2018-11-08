@@ -7,10 +7,10 @@ import client.Client;
 public class DeliveryPackage {
 
 	private Client receiver, sender;
-	private float weight;
-	private float size; //size in L or dm3
+	private double weight;
+	private double  size; //size in L or dm3
 	
-	public DeliveryPackage(Client sender, Client receiver, float weight, float size) {
+	public DeliveryPackage(Client sender, Client receiver, double weight, double size) {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.weight = weight;
@@ -25,11 +25,11 @@ public class DeliveryPackage {
 		return receiver.getLocation();
 	}
 	
-	public float getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 	
-	public float getSize() {
+	public double getSize() {
 		return size;
 	}
 
