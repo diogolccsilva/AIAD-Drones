@@ -22,7 +22,6 @@ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 Boston, MA  02111-1307, USA.
 *****************************************************************/
 
-
 import jade.core.AID;
 
 import java.awt.*;
@@ -30,21 +29,21 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
-  @author Giovanni Caire - TILAB
+ * @author Giovanni Caire - TILAB
  */
-class ClientGUI extends JFrame {	
+class ClientGUI extends JFrame {
 	private Client myAgent;
 	private ClientGUI window;
-	
+
 	private JTextField xField, yField, articleField;
-	
+
 	ClientGUI(Client a) {
 		super(a.getLocalName());
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		window = this;
-		
+
 		myAgent = a;
-		
+
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(3, 2));
 		p.add(new JLabel("X position:"));
@@ -57,46 +56,49 @@ class ClientGUI extends JFrame {
 		articleField = new JTextField(15);
 		p.add(articleField);
 		getContentPane().add(p, BorderLayout.CENTER);
-		
+
 		JButton addButton = new JButton("Add order");
-		addButton.addActionListener( new ActionListener() {
+		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
 					Integer xPos = Integer.parseInt(xField.getText().trim());
 					Integer yPos = Integer.parseInt(yField.getText().trim());
 					String artc = articleField.getText().trim();
+<<<<<<< HEAD
+					// myAgent.setAttributes(xPos, yPos, artc);
+=======
 					//myAgent.setAttributes(xPos, yPos, artc);
+>>>>>>> 4c3b5388d443c18b4f1deaa22f6dd7809bd12dbc
 					xField.setText("");
 					yField.setText("");
 					window.dispose();
-				}
-				catch (Exception e) {
-					JOptionPane.showMessageDialog(ClientGUI.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(ClientGUI.this, "Invalid values. " + e.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		} );
+		});
 		p = new JPanel();
 		p.add(addButton);
 		getContentPane().add(p, BorderLayout.SOUTH);
-		
-		// Make the agent terminate when the user closes 
-		// the GUI using the button on the upper right corner	
-		addWindowListener(new	WindowAdapter() {
+
+		// Make the agent terminate when the user closes
+		// the GUI using the button on the upper right corner
+		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				myAgent.doDelete();
 			}
-		} );
-		
+		});
+
 		setResizable(false);
 	}
-	
+
 	public void showGui() {
 		pack();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int centerX = (int)screenSize.getWidth() / 2;
-		int centerY = (int)screenSize.getHeight() / 2;
+		int centerX = (int) screenSize.getWidth() / 2;
+		int centerY = (int) screenSize.getHeight() / 2;
 		setLocation(centerX - getWidth() / 2, centerY - getHeight() / 2);
 		super.setVisible(true);
-	}	
+	}
 }
-
