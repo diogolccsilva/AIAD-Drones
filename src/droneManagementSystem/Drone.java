@@ -21,6 +21,8 @@ public class Drone extends Agent {
 	
 	private int distance;
 	private AID[] warehouses;
+	
+	private int capacity;
 
 	
 	private boolean working = false;
@@ -55,6 +57,10 @@ public class Drone extends Agent {
 		}
 		System.out.println(getLocalName() + ": drone killed");
 	}
+	
+	private void setDroneInformation() {
+      //todo
+    }
 	
 	private class ListeningBehaviour extends CyclicBehaviour {
 		
@@ -260,6 +266,47 @@ private class RequestPerformer extends Behaviour {
 		return ((step == 2 && bestWarehouse == null) || step == 4);
 	}
 }  // End of inner class RequestPerformer
+
+
+public int getDistance() {
+	return distance;
+}
+
+public void setDistance(int distance) {
+	this.distance = distance;
+}
+
+public AID[] getWarehouses() {
+	return warehouses;
+}
+
+public void setWarehouses(AID[] warehouses) {
+	this.warehouses = warehouses;
+}
+
+public int getCapacity() {
+	return capacity;
+}
+
+public void setCapacity(int capacity) {
+	this.capacity = capacity;
+}
+
+public boolean isWorking() {
+	return working;
+}
+
+public void setWorking(boolean working) {
+	this.working = working;
+}
+
+public Point getCoords() {
+	return coords;
+}
+
+public void setCoords(Point coords) {
+	this.coords = coords;
+}
 
 	
 	

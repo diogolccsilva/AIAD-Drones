@@ -1,5 +1,7 @@
 package droneManagementSystem;
 
+import java.io.IOException;
+
 import jade.core.Agent;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
@@ -11,6 +13,10 @@ import jade.wrapper.StaleProxyException;
 public class Launcher {
 
 	public static void main(String[] args) {
+		
+		
+		
+		
 		Runtime rt = Runtime.instance();
 
 		Profile p = new ProfileImpl();
@@ -19,7 +25,26 @@ public class Launcher {
 		
 		Object[] args1 = new Object[0];
 		
+		/* INIT BANDS */
+		AgentController ac2;
+		try {
+			try {
+				Utils.readFileDrones(Utils.PATH_DRONES);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for (Object[] drone : Utils.dronesInformation) {
+				ac2 = cc.createNewAgent("drone1", "droneManagementSystem.Drone", drone);
+				ac2.start();
+			}
+			System.out.println("\n--- droens ---\n");
+
+		} catch (StaleProxyException e) {
+			e.printStackTrace();
+		}
 		
+		/**
 		try {
 			AgentController ag1 = cc.createNewAgent("drone1","droneManagementSystem.Drone",args1);
 			ag1.start();
@@ -55,7 +80,7 @@ public class Launcher {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 		
 		/*
 		AgentController ac3;
