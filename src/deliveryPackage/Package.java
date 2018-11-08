@@ -1,10 +1,12 @@
-package droneManagementSystem;
+package deliveryPackage;
 
 import java.awt.Point;
 
+import client.Client;
+
 public class Package {
 
-	private Point destination;
+	private Client receiver, sender;
 	private float weight;
 	private float size; //size in L or dm3
 	

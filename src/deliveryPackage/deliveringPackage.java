@@ -1,16 +1,20 @@
-package droneManagementSystem;
+package deliveryPackage;
 
+import drone.Drone;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 
 public class deliveringPackage extends Behaviour {
 
+	int packageId;
+	
 	public deliveringPackage() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public deliveringPackage(Agent a) {
+	public deliveringPackage(Agent a, int packageId) {
 		super(a);
+		this.packageId = packageId;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -22,7 +26,7 @@ public class deliveringPackage extends Behaviour {
 
 	@Override
 	public boolean done() {
-		return this.myAgent.getPosition() ;
+		return ((Drone)this.myAgent).getCurrentPosition() ==  ;
 	}
 
 }
