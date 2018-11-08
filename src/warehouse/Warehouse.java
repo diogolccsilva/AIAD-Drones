@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.Queue;
 
 import deliveryPackage.DeliveryPackage;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -14,6 +15,25 @@ public class Warehouse extends Agent {
 
 	private Point2D location;
 	private Queue<DeliveryPackage> deliveries;
+	
+	public static AID[] getWarehouses(Agent agent) {
+		AID[] warehouses = new AID[0];
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("storing-service");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(agent, template);
+			System.out.println("Found the following drone agents:");
+			warehouses = new AID[result.length];
+			for (int i = 0; i < result.length; ++i) {
+				warehouses[i] = result[i].getName();
+			}
+		} catch (FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return warehouses;
+	}
 	
 	public void setup(){
 		System.out.println(getLocalName() + ": warehouse created");
