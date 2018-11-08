@@ -15,9 +15,7 @@ public class Utils {
 	    public static ArrayList<Object[]> dronesInformation;
 	    public final static String PATH_CLIENTS = "./input/clients.txt";
 	    public static ArrayList<Object[]> clientsInformation;
-	    
-	    
-	    public final static String PATH_SPECTATORS = "./input/warehouses.txt";
+	    public final static String PATH_WAREHOUSES = "./input/warehouses.txt";
 	    public static ArrayList<Object[]> warehousesInformation;
 	    
 
@@ -56,12 +54,12 @@ public class Utils {
                drone[1]=Integer.parseInt(coords[0]);
                drone[2]=Integer.parseInt(coords[1]);
                drone[3] = Integer.parseInt(tokens[2]);
-               
+               /**
                System.out.println("droneName"+drone[0]);
                System.out.println("x="+drone[1]);
                System.out.println("y="+drone[2]);
                System.out.println("cap="+drone[3]);
-
+*/
                 dronesInformation.add(drone);
             }
 
@@ -101,9 +99,12 @@ public class Utils {
                 String[] tokens = line.split(";");
 
                String[] coords = tokens[1].split(",");
-               client[0] = Integer.parseInt(tokens[0]);
+/**
+               System.out.println(tokens[0]);
+               System.out.println(tokens[1]);
+*/
 
-               
+               client[0]=tokens[0];
                client[1]=Integer.parseInt(coords[0]);
                client[2]=Integer.parseInt(coords[1]);
                
@@ -153,17 +154,16 @@ public class Utils {
                 String[] tokens = line.split(";");
 
                String[] coords = tokens[1].split(",");
-               warehouse[0] = Integer.parseInt(tokens[0]);
 
-               
+               warehouse[0]=tokens[0];
                warehouse[1]=Integer.parseInt(coords[0]);
                warehouse[2]=Integer.parseInt(coords[1]);
                
-               
-               System.out.println("ClientName="+ warehouse[0]);
+               /**
+               System.out.println("WarehouseName="+ warehouse[0]);
                System.out.println("x="+ warehouse[1]);
                System.out.println("y="+ warehouse[2]);
-
+                */
                
              
                 warehousesInformation.add( warehouse);

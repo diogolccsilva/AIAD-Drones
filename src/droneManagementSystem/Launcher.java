@@ -1,5 +1,8 @@
 package droneManagementSystem;
 
+import java.io.IOException;
+
+import Utils.Utils;
 import jade.core.Agent;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
@@ -11,6 +14,35 @@ import jade.wrapper.StaleProxyException;
 public class Launcher {
 
 	public static void main(String[] args) {
+		
+		/**
+			try {
+				Utils.readFileDrones(Utils.PATH_DRONES);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				Utils.readFileClients(Utils.PATH_CLIENTS);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				Utils.readFileWarehouses(Utils.PATH_WAREHOUSES);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			*/
+			
+
+	
+		
+		/**
 		Runtime rt = Runtime.instance();
 
 		Profile p = new ProfileImpl();
@@ -51,7 +83,7 @@ public class Launcher {
 			e.printStackTrace();
 		}
 
-		
+		*/
 	}
 
 }
