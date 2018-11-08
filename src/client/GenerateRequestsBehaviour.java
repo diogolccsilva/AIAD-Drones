@@ -38,7 +38,7 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 			AID[] drones = Drone.getDrones(myAgent);
 			if (drones.length > 0) {
 				System.out.println(this.myAgent.getLocalName() + ": sending request to drones");
-				//need help
+				//start comunication behaviour here
 			}
 			else {
 				System.out.println(this.myAgent.getLocalName() + ": no drones were found");

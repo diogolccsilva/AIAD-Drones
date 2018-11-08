@@ -44,7 +44,7 @@ public class Warehouse extends Agent {
         
         registerWarehouseService();
         
-        addBehaviour(new GenerateWarehouseRequestsBehaviour());
+        addBehaviour(new GenerateWarehouseRequestsBehaviour(this,2000));
         
 	}
 	
@@ -70,6 +70,10 @@ public class Warehouse extends Agent {
 			fe.printStackTrace();
 		}
 
+	}
+	
+	public Queue<DeliveryPackage> getDeliveries() {
+		return deliveries;
 	}
 
 }
