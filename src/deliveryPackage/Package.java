@@ -10,8 +10,11 @@ public class Package {
 	private float weight;
 	private float size; //size in L or dm3
 	
-	public Package() {
-		
+	public Package(Client sender, Client receiver, float weight, float size) {
+		this.sender = sender;
+		this.receiver = receiver;
+		this.weight = weight;
+		this.size = size;
 	}
 	
 	public Point getDestination() {
