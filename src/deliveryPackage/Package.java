@@ -15,7 +15,11 @@ public class Package {
 	}
 	
 	public Point getDestination() {
-		return destination;
+		return sender.getLocation();
+	}
+	
+	public Point getSource() {
+		return receiver.getLocation();
 	}
 	
 	public float getWeight() {
