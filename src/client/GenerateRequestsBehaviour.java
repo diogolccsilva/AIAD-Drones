@@ -24,7 +24,9 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 			double weight = 0;
 			double size = 0;
 			DeliveryPackage nPackage = new DeliveryPackage(sender,receiver,weight,size);
+			System.out.println(this.myAgent.getLocalName() + ": new request created");
 		}
+		System.out.println(this.myAgent.getLocalName() + ": not request was generated");
 	}
 
 }

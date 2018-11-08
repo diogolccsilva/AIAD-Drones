@@ -1,6 +1,7 @@
 package client;
 
 import java.awt.geom.Point2D;
+import java.util.concurrent.ThreadLocalRandom;
 
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
@@ -13,7 +14,9 @@ public class Client extends Agent {
 	public void setup() {
 		System.out.println("Client created");
 
-		//addBehaviour();
+		int rPeriod = ThreadLocalRandom.current().nextInt(1000,1500);
+		
+		addBehaviour(new GenerateRequestsBehaviour(this, rPeriod));
 	}
 
 	public void takeDown() {
