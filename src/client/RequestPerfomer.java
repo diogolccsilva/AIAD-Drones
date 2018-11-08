@@ -5,6 +5,18 @@ import jade.lang.acl.ACLMessage;
 
 public class RequestPerfomer extends Behaviour {
 
+	@Override
+	public void action() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean done() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+/**
 	private AID bestDrone; // The agent who provides the best offer
 	private double bestDistance = Double.MAX_VALUE; // The best offered price
 	private int repliesCnt = 0; // The counter of replies from seller agents
@@ -87,6 +99,7 @@ public class RequestPerfomer extends Behaviour {
 			}
 			break;
 		}
+		
 	}
 
 	public boolean done() {
@@ -95,5 +108,5 @@ public class RequestPerfomer extends Behaviour {
 		}
 		return ((step == 2 && bestDrone == null) || step == 4);
 	}
-	
+	*/
 }

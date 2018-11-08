@@ -23,23 +23,32 @@ public class Drone extends Agent {
 	public void setup() {
 		
 		System.out.println(getLocalName() + ": drone created");
+		
+		registerDroneService();
+		
+		/* r = new Random();
+		xPosition = r.nextInt(20);
+		yPosition = r.nextInt(20);*/
+		
+		//TODO adding behaviours
+		//addBehaviour(new OfferRequestsServer());
+
+	}
+	
+	
+	public void registerDroneService(){
+		
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType("delivery-service");
-		sd.setName("AMAZON");
+		sd.setName("UPS");
 		dfd.addServices(sd);
 		try {
 			DFService.register(this, dfd);
 		} catch (FIPAException fe) {
 			fe.printStackTrace();
 		}
-		
-		/* r = new Random();
-		xPosition = r.nextInt(20);
-		yPosition = r.nextInt(20);*/
-		
-		addBehaviour(new OfferRequestsServer());
 
 	}
 	
