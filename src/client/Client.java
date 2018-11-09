@@ -3,6 +3,8 @@ package client;
 import java.awt.geom.Point2D;
 import java.util.concurrent.ThreadLocalRandom;
 
+import drone.Drone;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.OneShotBehaviour;
@@ -10,6 +12,9 @@ import jade.core.behaviours.OneShotBehaviour;
 public class Client extends Agent {
 
 	private Point2D location;
+	
+	//AID[] drones;
+
 
 	public void setup() {
 		System.out.println(getLocalName() + ": client created");
@@ -50,6 +55,9 @@ private void setClientInformation() {
 	public void setLocation(Point2D location) {
 		this.location = location;
 	}
+
+
+	
 	
 
 }

@@ -1,10 +1,11 @@
 package deliveryPackage;
 
 import java.awt.geom.Point2D;
+import java.io.Serializable;
 
 import client.Client;
 
-public class DeliveryPackage {
+public class DeliveryPackage implements Serializable {
 
 	private Client receiver, sender;
 	private double weight;
@@ -18,11 +19,11 @@ public class DeliveryPackage {
 	}
 	
 	public Point2D getDestination() {
-		return sender.getLocation();
+		return receiver.getLocation();
 	}
 	
 	public Point2D getSource() {
-		return receiver.getLocation();
+		return sender.getLocation();
 	}
 	
 	public double getWeight() {

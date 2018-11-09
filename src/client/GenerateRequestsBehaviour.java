@@ -33,12 +33,18 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 			DeliveryPackage nPackage = new DeliveryPackage(sender, receiver, weight, size);
 			
 			Request request = new PickupRequest(nPackage);
-			System.out.println(this.myAgent.getLocalName() + ": new request created");
+			//System.out.println(this.myAgent.getLocalName() + ": new request created");
 			
 			AID[] drones = Drone.getDrones(myAgent);
 			if (drones.length > 0) {
 				System.out.println(this.myAgent.getLocalName() + ": sending request to drones");
 				//start comunication behaviour here
+				System.out.println("Found the following drone agents:");
+				for (int i = 0; i < drones.length; ++i) {
+					System.out.println(drones[i].getName());
+				}
+				myAgent.addBehaviour(new RequestPerfomer(drones));
+
 			}
 			else {
 				System.out.println(this.myAgent.getLocalName() + ": no drones were found");

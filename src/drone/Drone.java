@@ -62,7 +62,7 @@ public class Drone extends Agent {
 		yPosition = r.nextInt(20);*/
 		
 		//TODO adding behaviours
-		//addBehaviour(new OfferRequestsServer());
+		addBehaviour(new GetRequests());
 
 	}
 	

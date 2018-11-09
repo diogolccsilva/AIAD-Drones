@@ -16,13 +16,16 @@ public class GetRequests extends CyclicBehaviour {
 		MessageTemplate mt1 = MessageTemplate.MatchPerformative(ACLMessage.CFP);
 		MessageTemplate mt2 = MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
 		ACLMessage msg = myAgent.receive(mt1);
-		ACLMessage reply = msg.createReply();
+
+		
+
 
 		if (msg != null) {
 			// CFP Message received. Process it
-			
+			ACLMessage reply = msg.createReply();
+
 			String received = msg.getContent();
-			System.out.println("Drone received request with message:"+received);
+			//System.out.println("Drone received request with message:"+received);
 
 			double weight=99;
 			Point2D coords = null;
@@ -53,6 +56,8 @@ public class GetRequests extends CyclicBehaviour {
 			myAgent.send(reply);
 		}
 		else if ((msg = myAgent.receive(mt2)) != null){
+			ACLMessage reply = msg.createReply();
+
 			// ACCEPT_PROPOSAL Message received. Process it
 			
 			// add working behavior to simulate drone moving
