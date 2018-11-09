@@ -108,11 +108,11 @@ public class Utils {
                client[1]=Integer.parseInt(coords[0]);
                client[2]=Integer.parseInt(coords[1]);
                
-               
+     /**          
                System.out.println("ClientName="+client[0]);
                System.out.println("x="+client[1]);
                System.out.println("y="+client[2]);
-
+*/
                
              
                 clientsInformation.add(client);

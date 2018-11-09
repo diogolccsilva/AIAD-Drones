@@ -45,6 +45,6 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 			}
 			return;
 		}
-		System.out.println(this.myAgent.getLocalName() + ": no request was generated");
+		//System.out.println(this.myAgent.getLocalName() + ": no request was generated");
 	}
 }

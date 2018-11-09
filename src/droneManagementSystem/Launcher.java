@@ -45,25 +45,28 @@ public class Launcher {
 		AgentController ac2;
 		try {
 			Utils.readFileDrones(Utils.PATH_DRONES);
+
 			for (Object[] drone : Utils.dronesInformation) {
-				ac2 = drones.createNewAgent((String) drone[0], "drone.Drone", drone);
-				System.out.println("Drones args: "+drone[0]+","+drone[1]+","+drone[2]+","+drone[3]);
+				ac2 = drones.createNewAgent( drone[0].toString(), "drone.Drone", drone);
+				//System.out.println("Drones args: "+drone[0].toString()+","+drone[1]+","+drone[2]+","+drone[3]);
 				ac2.start();
 			}
-			System.out.println("\n--- Drones ---\n");
+			System.out.println("\n--- Drones ---");
+
 
 		} catch (StaleProxyException | IOException e) {
 			e.printStackTrace();
 		}
+		
 		/* INIT Clients */
 		AgentController ac3;
 		try {
-			Utils.readFileDrones(Utils.PATH_CLIENTS);
+			Utils.readFileClients(Utils.PATH_CLIENTS);
 			for (Object[] client : Utils.clientsInformation) {
 				ac3 = clients.createNewAgent((String) client[0], "client.Client", client);
 				ac3.start();
 			}
-			System.out.println("\n--- Clients ---\n");
+			System.out.println("--- Clients ---");
 
 		} catch (StaleProxyException | IOException e) {
 			e.printStackTrace();
@@ -71,7 +74,7 @@ public class Launcher {
 		/* INIT Warehouses */
 		AgentController ac4;
 		try {
-			Utils.readFileDrones(Utils.PATH_WAREHOUSES);
+			Utils.readFileWarehouses(Utils.PATH_WAREHOUSES);
 			for (Object[] warehouse : Utils.warehousesInformation) {
 				ac4 = drones.createNewAgent((String) warehouse[0], "warehouse.Warehouse", warehouse);
 				ac4.start();
@@ -84,7 +87,7 @@ public class Launcher {
 		
 		
 		
-	
+
 			
 
 	

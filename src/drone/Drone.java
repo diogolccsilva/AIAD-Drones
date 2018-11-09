@@ -42,6 +42,18 @@ public class Drone extends Agent {
 	public void setup() {
 		
 		System.out.println(getLocalName() + ": drone created");
+		/**
+		  System.out.println("arg0:"+getArguments()[0]);
+		  System.out.println("arg1:"+getArguments()[1]);
+		  System.out.println("arg2:"+getArguments()[2]);
+		  System.out.println("arg3:"+getArguments()[3]);
+*/
+
+		setDroneInformation();
+		/**
+		  System.out.println("after-> weight:"+ weightCapacity);
+		  System.out.println("after-> position:"+ position);
+*/
 		
 		registerDroneService();
 		
@@ -78,6 +90,39 @@ public class Drone extends Agent {
 			e.printStackTrace();
 		}
 		System.out.println(getLocalName() + ": drone killed");
+	}
+	
+	private void setDroneInformation() {
+		
+		int weight = (int)getArguments()[3];
+			int x = (int)getArguments()[1];
+			int y = (int)getArguments()[2];
+					
+			double dx=(double)x;
+			double dy=(double)y;
+			
+			Point2D pa = new Point2D.Double(dx, dy);
+
+	        setPosition(pa);
+	        setWeightCapacity(weight);
+	       
+	    }
+	 
+
+	public void setRequests(TreeSet<Request> requests) {
+		this.requests = requests;
+	}
+
+	public void setPosition(Point2D position) {
+		this.position = position;
+	}
+
+	public void setWeightCapacity(float weightCapacity) {
+		this.weightCapacity = weightCapacity;
+	}
+
+	public void setBaseVelocity(float baseVelocity) {
+		this.baseVelocity = baseVelocity;
 	}
 
 	public Point2D getCurrentPosition() {

@@ -37,14 +37,18 @@ public class Warehouse extends Agent {
 	
 	public void setup(){
 		System.out.println(getLocalName() + ": warehouse created");
-		Object[] args = getArguments();
-        double xPosition = Double.parseDouble(args[0].toString());
-        double yPosition = Double.parseDouble(args[1].toString());
-        this.location = new Point2D.Double(xPosition,yPosition);
-        
+		//Object[] args = getArguments();
+        //double xPosition = Double.parseDouble(args[0].toString());
+        //double yPosition = Double.parseDouble(args[1].toString());
+        //this.location = new Point2D.Double(xPosition,yPosition);
+		
+		
+		setWarehouseInformation();
+		//System.out.println(location+ ": warehouse location");
+
         registerWarehouseService();
         
-        addBehaviour(new GenerateWarehouseRequestsBehaviour(this,2000));
+        //addBehaviour(new GenerateWarehouseRequestsBehaviour(this,2000));
         
 	}
 	
@@ -56,6 +60,14 @@ public class Warehouse extends Agent {
 		return location;
 	}
 	
+	public void setLocation(Point2D location) {
+		this.location = location;
+	}
+
+	public void setDeliveries(TreeSet<DeliveryPackage> deliveries) {
+		this.deliveries = deliveries;
+	}
+
 	public void registerWarehouseService(){
 		
 		DFAgentDescription dfd = new DFAgentDescription();
@@ -71,6 +83,21 @@ public class Warehouse extends Agent {
 		}
 
 	}
+	
+	private void setWarehouseInformation() {
+		
+		int x = (int)getArguments()[1];
+		int y = (int)getArguments()[2];
+				
+		double dx=(double)x;
+		double dy=(double)y;
+		
+		Point2D pa = new Point2D.Double(dx, dy);
+		
+		setLocation(pa);
+        
+       
+    }
 	
 	public TreeSet<DeliveryPackage> getDeliveries() {
 		return deliveries;
