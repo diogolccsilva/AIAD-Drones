@@ -1,7 +1,7 @@
 package warehouse;
 
 import java.awt.geom.Point2D;
-import java.util.Queue;
+import java.util.TreeSet;
 
 import deliveryPackage.DeliveryPackage;
 import jade.core.AID;
@@ -14,7 +14,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 public class Warehouse extends Agent {
 
 	private Point2D location;
-	private Queue<DeliveryPackage> deliveries;
+	private TreeSet<DeliveryPackage> deliveries;
 	
 	public static AID[] getWarehouses(Agent agent) {
 		AID[] warehouses = new AID[0];
@@ -44,7 +44,7 @@ public class Warehouse extends Agent {
         
         registerWarehouseService();
         
-        addBehaviour(new GenerateWarehouseRequestsBehaviour());
+        addBehaviour(new GenerateWarehouseRequestsBehaviour(this,2000));
         
 	}
 	
@@ -70,6 +70,10 @@ public class Warehouse extends Agent {
 			fe.printStackTrace();
 		}
 
+	}
+	
+	public TreeSet<DeliveryPackage> getDeliveries() {
+		return deliveries;
 	}
 
 }
