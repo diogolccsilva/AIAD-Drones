@@ -8,6 +8,7 @@ import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import request.Request;
 
 public class RequestPerfomer extends Behaviour {
 	
@@ -19,11 +20,13 @@ public class RequestPerfomer extends Behaviour {
 	private int step = 0;
 	private AID[] drones;
 	private String msg = "ENCOMENDA";
+	private Request request;
 
 	
-	public RequestPerfomer(AID[] dronesFound) {
+	public RequestPerfomer(AID[] dronesFound, Request request) {
 		super();
 		this.drones = dronesFound;
+		this.request = request;
 	}
 
 	@Override

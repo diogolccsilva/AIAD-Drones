@@ -43,7 +43,7 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 				for (int i = 0; i < drones.length; ++i) {
 					System.out.println(drones[i].getName());
 				}
-				myAgent.addBehaviour(new RequestPerfomer(drones));
+				myAgent.addBehaviour(new RequestPerfomer(drones,request));
 
 			}
 			else {
