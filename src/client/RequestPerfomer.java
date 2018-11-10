@@ -104,7 +104,7 @@ public class RequestPerfomer extends Behaviour {
 				if (reply.getPerformative() == ACLMessage.INFORM) {
 					// Purchase successful. We can terminate
 					System.out.println("Drone picked:" + reply.getSender().getName()+", Distancia = " + bestDistance);
-					//myAgent.doDelete();
+					myAgent.doDelete();
 				} else {
 					System.out.println("Attempt failed.");
 				}

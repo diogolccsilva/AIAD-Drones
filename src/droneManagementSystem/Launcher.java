@@ -76,7 +76,7 @@ public class Launcher {
 		try {
 			Utils.readFileWarehouses(Utils.PATH_WAREHOUSES);
 			for (Object[] warehouse : Utils.warehousesInformation) {
-				ac4 = drones.createNewAgent((String) warehouse[0], "warehouse.Warehouse", warehouse);
+				ac4 = warehouses.createNewAgent((String) warehouse[0], "warehouse.Warehouse", warehouse);
 				ac4.start();
 			}
 			System.out.println("\n--- Warehouses ---\n");
