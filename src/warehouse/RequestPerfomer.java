@@ -34,6 +34,7 @@ public class RequestPerfomer extends Behaviour {
 		
 		 
 		// the package comes in the arguments
+		//System.out.println(delivery.toString());
 		
 		
 		switch (step) {
@@ -44,6 +45,8 @@ public class RequestPerfomer extends Behaviour {
 				cfp.addReceiver(drones[i]);
 			}
 			cfp.setContent(" warehouse looking to send a package");
+			//System.out.println("Warehouse looking to send");
+
 			cfp.setConversationId("pickup");
 			cfp.setReplyWith("cfp" + System.currentTimeMillis()); // Unique
 			

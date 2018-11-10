@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import client.Client;
 
-public class DeliveryPackage implements Serializable {
+public class DeliveryPackage implements Serializable, Comparable {
 
 	private Client receiver, sender;
 	private double weight;
@@ -32,6 +32,12 @@ public class DeliveryPackage implements Serializable {
 	
 	public double getSize() {
 		return size;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
