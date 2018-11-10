@@ -34,6 +34,8 @@ public class GenerateWarehouseRequestsBehaviour extends TickerBehaviour {
 			Request request = new DeliverRequest(dp);
 			System.out.println(this.myAgent.getLocalName() + ": new request created");
 			//send request to agents
+			
+			myAgent.addBehaviour(new RequestPerfomer(drones,dp));
 		}
 	}
 
