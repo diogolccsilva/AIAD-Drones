@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.TreeSet;
 
 import client.Client;
+import client.RequestPerfomer;
 import deliveryPackage.DeliveryPackage;
 import drone.Drone;
 import jade.core.AID;
@@ -15,8 +16,7 @@ public class GenerateWarehouseRequestsBehaviour extends TickerBehaviour {
 
 	public GenerateWarehouseRequestsBehaviour(Agent a, long period) {
 		super(a, period);
-		/**  THIS WAS TO TEST
-		 Point2D p1 = new Point2D.Double(2,3);
+			Point2D p1 = new Point2D.Double(2,3);
 	        Point2D p2 = new Point2D.Double(2,3);
 
 	        Client c1 = new Client ();
@@ -31,7 +31,7 @@ public class GenerateWarehouseRequestsBehaviour extends TickerBehaviour {
 			del.add(pp1);
 			del.add(pp2);
 			((Warehouse)myAgent).setDeliveries(del);
-			*/
+			
 
 	
 	}
@@ -40,32 +40,34 @@ public class GenerateWarehouseRequestsBehaviour extends TickerBehaviour {
 	protected void onTick() {
 		// TODO Auto-generated method stub
 		TreeSet<DeliveryPackage> deliveries = ((Warehouse)myAgent).getDeliveries();
-        //System.out.println("Fruits Set : " + ((Warehouse)myAgent).getDeliveries());
 
 		if (deliveries.size() < 1) {
-			System.out.println(this.myAgent.getLocalName() + ": no deliveries were found");
+			//System.out.println(this.myAgent.getLocalName() + ": no deliveries were found");
 			return;
 		}
+		
 		AID[] drones = Drone.getDrones(myAgent);
-		if (drones.length < 1) {
-			System.out.println(this.myAgent.getLocalName() + ": no drones were found");
-			return;
-		}
-		else{				
-
+		if (drones.length > 0) {
+			System.out.println(this.myAgent.getLocalName() + ": sending request to drones");
+			//start comunication behaviour here
+			System.out.println(this.myAgent.getLocalName()+"Found the following drone agents:");
 			for (int i = 0; i < drones.length; ++i) {
 				System.out.println(drones[i].getName());
 			}
+			for (DeliveryPackage dp : deliveries) {
+				DeliverRequest request = new DeliverRequest(dp);
+				System.out.println(this.myAgent.getLocalName() + ": looking to send a package");
+				
+				myAgent.addBehaviour(new RequestDrone(drones, dp) );
+			}
+
+		}
+		else {
+			System.out.println(this.myAgent.getLocalName() + ": no drones were found");
+		}
+		return;
+	
 		
-		}
-		System.out.println(this.myAgent.getLocalName() + ": sending request(s) to drones");
-		for (DeliveryPackage dp : deliveries) {
-			Request request = new DeliverRequest(dp);
-			System.out.println(this.myAgent.getLocalName() + ": new request created");
-			//send request to agents
-			
-			myAgent.addBehaviour(new RequestPerfomer(drones,dp));
-		}
 	}
 
 }

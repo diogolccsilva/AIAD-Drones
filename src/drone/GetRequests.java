@@ -17,9 +17,6 @@ public class GetRequests extends CyclicBehaviour {
 		MessageTemplate mt2 = MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
 		ACLMessage msg = myAgent.receive(mt1);
 
-		
-
-
 		if (msg != null) {
 			// CFP Message received. Process it
 			ACLMessage reply = msg.createReply();

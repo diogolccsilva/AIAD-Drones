@@ -47,7 +47,7 @@ public class Warehouse extends Agent {
        
         addBehaviour(new GetRequests());
 
-       // addBehaviour(new GenerateWarehouseRequestsBehaviour(this,2000));
+        addBehaviour(new GenerateWarehouseRequestsBehaviour(this,10000));
         
 	}
 	

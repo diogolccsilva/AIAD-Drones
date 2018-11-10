@@ -11,7 +11,7 @@ import jade.lang.acl.MessageTemplate;
 import deliveryPackage.DeliveryPackage;
 import client.Client;
 
-public class RequestPerfomer extends Behaviour {
+public class RequestDrone extends Behaviour {
 	
 	
 	private AID bestDrone; // The agent who provides the best offer
@@ -23,7 +23,7 @@ public class RequestPerfomer extends Behaviour {
 	private String msg = "ENCOMENDA";
 	private DeliveryPackage delivery;
 	
-	public RequestPerfomer(AID[] dronesFound, DeliveryPackage pac) {
+	public RequestDrone(AID[] dronesFound, DeliveryPackage pac) {
 		super();
 		this.drones = dronesFound;
 		this.delivery=pac;
@@ -47,7 +47,7 @@ public class RequestPerfomer extends Behaviour {
 			cfp.setContent(" warehouse looking to send a package");
 			//System.out.println("Warehouse looking to send");
 
-			cfp.setConversationId("pickup");
+			cfp.setConversationId("delivery");
 			cfp.setReplyWith("cfp" + System.currentTimeMillis()); // Unique
 			
 			try {
@@ -59,7 +59,7 @@ public class RequestPerfomer extends Behaviour {
 
 			myAgent.send(cfp);
 			// Prepare the template to get proposals
-			mt = MessageTemplate.and(MessageTemplate.MatchConversationId("pickup"),
+			mt = MessageTemplate.and(MessageTemplate.MatchConversationId("delivery"),
 					MessageTemplate.MatchInReplyTo(cfp.getReplyWith()));
 			step = 1;
 			break;
@@ -93,9 +93,10 @@ public class RequestPerfomer extends Behaviour {
 			ACLMessage order = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
 			order.addReceiver(bestDrone);
 			order.setContent(msg);
-			order.setConversationId("pickup");
+			order.setConversationId("delivery");
 			order.setReplyWith("order" + System.currentTimeMillis());
 			myAgent.send(order);
+			System.out.println("warehouse mandou proposal");
 			// Prepare the template to get the purchase order reply
 			mt = MessageTemplate.and(MessageTemplate.MatchConversationId("delivery"),
 					MessageTemplate.MatchInReplyTo(order.getReplyWith()));
@@ -109,7 +110,7 @@ public class RequestPerfomer extends Behaviour {
 				if (reply.getPerformative() == ACLMessage.INFORM) {
 					// Purchase successful. We can terminate
 					System.out.println("Warehouse -->Drone picked:" + reply.getSender().getName()+", Distancia = " + bestDistance);
-					//myAgent.doDelete();
+					myAgent.doDelete();
 				} else {
 					System.out.println("Attempt failed.");
 				}
