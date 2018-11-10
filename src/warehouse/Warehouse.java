@@ -1,8 +1,10 @@
 package warehouse;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.util.TreeSet;
 
+import client.Client;
 import deliveryPackage.DeliveryPackage;
 import jade.core.AID;
 import jade.core.Agent;
@@ -15,7 +17,7 @@ public class Warehouse extends Agent {
 
 	private Point2D location;
 	private TreeSet<DeliveryPackage> deliveries;
-	
+
 	public static AID[] getWarehouses(Agent agent) {
 		AID[] warehouses = new AID[0];
 		DFAgentDescription template = new DFAgentDescription();
@@ -24,7 +26,7 @@ public class Warehouse extends Agent {
 		template.addServices(sd);
 		try {
 			DFAgentDescription[] result = DFService.search(agent, template);
-			System.out.println("Found the following drone agents:");
+			System.out.println(" Found the following warehouse agents:");
 			warehouses = new AID[result.length];
 			for (int i = 0; i < result.length; ++i) {
 				warehouses[i] = result[i].getName();
@@ -37,18 +39,15 @@ public class Warehouse extends Agent {
 	
 	public void setup(){
 		System.out.println(getLocalName() + ": warehouse created");
-		//Object[] args = getArguments();
-        //double xPosition = Double.parseDouble(args[0].toString());
-        //double yPosition = Double.parseDouble(args[1].toString());
-        //this.location = new Point2D.Double(xPosition,yPosition);
-		
 		
 		setWarehouseInformation();
 		//System.out.println(location+ ": warehouse location");
 
         registerWarehouseService();
-        
-        //addBehaviour(new GenerateWarehouseRequestsBehaviour(this,2000));
+       
+        addBehaviour(new GetRequests());
+
+        addBehaviour(new GenerateWarehouseRequestsBehaviour(this,10000));
         
 	}
 	
@@ -66,6 +65,10 @@ public class Warehouse extends Agent {
 
 	public void setDeliveries(TreeSet<DeliveryPackage> deliveries) {
 		this.deliveries = deliveries;
+	}
+	
+	public void addDelivery(DeliveryPackage dp) {
+		this.deliveries.add(dp);
 	}
 
 	public void registerWarehouseService(){
@@ -95,7 +98,8 @@ public class Warehouse extends Agent {
 		Point2D pa = new Point2D.Double(dx, dy);
 		
 		setLocation(pa);
-        
+		
+		
        
     }
 	
@@ -103,4 +107,5 @@ public class Warehouse extends Agent {
 		return deliveries;
 	}
 
+	
 }

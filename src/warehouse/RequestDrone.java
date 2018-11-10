@@ -1,4 +1,4 @@
-package client;
+package warehouse;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -8,9 +8,10 @@ import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import request.Request;
+import deliveryPackage.DeliveryPackage;
+import client.Client;
 
-public class RequestPerfomer extends Behaviour {
+public class RequestDrone extends Behaviour {
 	
 	
 	private AID bestDrone; // The agent who provides the best offer
@@ -20,20 +21,20 @@ public class RequestPerfomer extends Behaviour {
 	private int step = 0;
 	private AID[] drones;
 	private String msg = "ENCOMENDA";
-	private Request request;
-
+	private DeliveryPackage delivery;
 	
-	public RequestPerfomer(AID[] dronesFound, Request request) {
+	public RequestDrone(AID[] dronesFound, DeliveryPackage pac) {
 		super();
 		this.drones = dronesFound;
-		this.request = request;
+		this.delivery=pac;
 	}
 
 	@Override
 	public void action() {
 		
-		
-		DeliveryPackage pp= new DeliveryPackage((Client) myAgent, null, 1, 1);
+		 
+		// the package comes in the arguments
+		//System.out.println(delivery.toString());
 		
 		
 		switch (step) {
@@ -43,18 +44,19 @@ public class RequestPerfomer extends Behaviour {
 			for (int i = 0; i < drones.length; ++i) {
 				cfp.addReceiver(drones[i]);
 			}
-			cfp.setContent("looking to send a package");
+			cfp.setContent(" warehouse looking to send a package");
+			//System.out.println("Warehouse looking to send");
+
 			cfp.setConversationId("delivery");
 			cfp.setReplyWith("cfp" + System.currentTimeMillis()); // Unique
 			
 			try {
-				cfp.setContentObject( pp);
+				cfp.setContentObject(delivery);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			//ADD PACKAGE
 			myAgent.send(cfp);
 			// Prepare the template to get proposals
 			mt = MessageTemplate.and(MessageTemplate.MatchConversationId("delivery"),
@@ -94,6 +96,7 @@ public class RequestPerfomer extends Behaviour {
 			order.setConversationId("delivery");
 			order.setReplyWith("order" + System.currentTimeMillis());
 			myAgent.send(order);
+			System.out.println("warehouse mandou proposal");
 			// Prepare the template to get the purchase order reply
 			mt = MessageTemplate.and(MessageTemplate.MatchConversationId("delivery"),
 					MessageTemplate.MatchInReplyTo(order.getReplyWith()));
@@ -106,7 +109,7 @@ public class RequestPerfomer extends Behaviour {
 				// Purchase order reply received
 				if (reply.getPerformative() == ACLMessage.INFORM) {
 					// Purchase successful. We can terminate
-					System.out.println("Drone picked:" + reply.getSender().getName()+", Distancia = " + bestDistance);
+					System.out.println("Warehouse -->Drone picked:" + reply.getSender().getName()+", Distancia = " + bestDistance);
 					myAgent.doDelete();
 				} else {
 					System.out.println("Attempt failed.");

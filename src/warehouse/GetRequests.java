@@ -1,13 +1,16 @@
-package drone;
+package warehouse;
 
 import java.awt.geom.Point2D;
+import java.util.Random;
 
+import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
 import deliveryPackage.DeliveryPackage;
 
+import drone.Drone;
 
 public class GetRequests extends CyclicBehaviour {
 	
@@ -22,26 +25,30 @@ public class GetRequests extends CyclicBehaviour {
 			ACLMessage reply = msg.createReply();
 
 			String received = msg.getContent();
-			//System.out.println("Drone received request with message:"+received);
+			//System.out.println("Warehouse received request with message:"+received);
 
 			double weight=99;
 			Point2D coords = null;
-
+			
+			//AID drone =msg.getSender();
+			
 			try {
-				weight = ((DeliveryPackage)msg.getContentObject()).getWeight();
 				coords = ((DeliveryPackage)msg.getContentObject()).getSource();
 
 			} catch (UnreadableException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			float cap = ((Drone)myAgent).getWeightCapacity();
-			Point2D droneCoords = ((Drone)myAgent).getCurrentPosition();
+			Point2D warehouseCoords = ((Warehouse)myAgent).getLocation();
 			double distance;
 			
-			if (weight<cap) {
+			Random r = new Random();
+			float chance = r.nextFloat();
+
+			//random to sometimes refuse packages?
+			if (chance<= 0.30f) {
 				// The requested drone is available for sale. Reply with the distance
-				distance = droneCoords.distance(coords);
+				distance = warehouseCoords.distance(coords);
 				reply.setPerformative(ACLMessage.PROPOSE);
 				reply.setContent(String.valueOf(distance));
 			}
@@ -49,6 +56,8 @@ public class GetRequests extends CyclicBehaviour {
 				// The requested drone is NOT available 
 				reply.setPerformative(ACLMessage.REFUSE);
 				reply.setContent("not-available");
+				System.out.println("warehouse refused request");
+
 			}
 			myAgent.send(reply);
 		}
@@ -57,11 +66,12 @@ public class GetRequests extends CyclicBehaviour {
 
 			// ACCEPT_PROPOSAL Message received. Process it
 			
-			// add working behavior to simulate drone moving
+			// WAIT FOR THE PACKAGE TO BE DELIVERED 
+			// NO BEHAVIOUR NEEDED i think
 			// send INFORM in the end
-			reply.setPerformative(ACLMessage.INFORM);
+			//reply.setPerformative(ACLMessage.INFORM);
 
-			myAgent.send(reply);
+			//myAgent.send(reply);
 
 		}
 		else {

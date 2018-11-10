@@ -42,28 +42,16 @@ public class Drone extends Agent {
 	public void setup() {
 		
 		System.out.println(getLocalName() + ": drone created");
-		/**
-		  System.out.println("arg0:"+getArguments()[0]);
-		  System.out.println("arg1:"+getArguments()[1]);
-		  System.out.println("arg2:"+getArguments()[2]);
-		  System.out.println("arg3:"+getArguments()[3]);
-*/
-
+	
 		setDroneInformation();
-		/**
-		  System.out.println("after-> weight:"+ weightCapacity);
-		  System.out.println("after-> position:"+ position);
-*/
+	
 		
 		registerDroneService();
-		
-		/* r = new Random();
-		xPosition = r.nextInt(20);
-		yPosition = r.nextInt(20);*/
+	
 		
 		//TODO adding behaviours
 		addBehaviour(new GetRequests());
-
+		// add behavior to get best warehouse
 	}
 	
 	

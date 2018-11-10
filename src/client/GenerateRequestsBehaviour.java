@@ -9,6 +9,8 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import request.*;
 
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.util.concurrent.ThreadLocalRandom;
 
 import deliveryPackage.DeliveryPackage;
