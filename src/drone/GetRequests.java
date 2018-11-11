@@ -23,7 +23,10 @@ public class GetRequests extends CyclicBehaviour {
 		MessageTemplate mt3 = MessageTemplate.MatchPerformative(ACLMessage.REFUSE);
 
 		ACLMessage msg = myAgent.receive(mt1);
+		
+		
 
+		ACLMessage msg_refuse;
 		if (msg != null) {
 			// CFP Message received. Process it
 			ACLMessage reply = msg.createReply();
@@ -115,6 +118,11 @@ public class GetRequests extends CyclicBehaviour {
 
 			myAgent.send(reply);
 
+		}
+		else if((msg = myAgent.receive(mt3)) != null){
+			
+			//System.out.println("DRONE RECEIVED REFUSE FROM client");
+			// DO NOTHING?!
 		}
 		else {
 			block();

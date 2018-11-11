@@ -98,11 +98,24 @@ public class RequestPerfomer extends Behaviour {
 			order.setConversationId("delivery");
 			order.setReplyWith("order" + System.currentTimeMillis());
 			
-
 			myAgent.send(order);
 			// Prepare the template to get the purchase order reply
 			mt = MessageTemplate.and(MessageTemplate.MatchConversationId("delivery"),
 					MessageTemplate.MatchInReplyTo(order.getReplyWith()));
+			
+			////////////////////////////// SEND REFUSE MESSAGE TO OTHERS ///////////////
+			
+			ACLMessage refuse = new ACLMessage(ACLMessage.REFUSE);
+			for(int i=0;i<drones.length;i++){
+				if(drones[i]!= bestDrone){
+					refuse.addReceiver(drones[i]);
+					refuse.setContent(msg);
+					myAgent.send(refuse);
+				}
+				////////////////////////////     END  ///////////////////////////////////
+				
+			}
+
 			step = 3;
 			break;
 		case 3:
