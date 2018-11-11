@@ -9,6 +9,7 @@ import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import request.Request;
 
 public class RequestPerfomer extends Behaviour {
 	
