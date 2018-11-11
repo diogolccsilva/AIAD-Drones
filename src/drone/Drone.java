@@ -3,6 +3,7 @@ package drone;
 import java.awt.geom.Point2D;
 import java.util.TreeSet;
 
+import deliveryPackage.DeliveryPackage;
 import request.*;
 import jade.core.AID;
 import jade.core.Agent;
@@ -16,10 +17,16 @@ public class Drone extends Agent {
 	
 	private TreeSet<Request> requests;
 	
+	private DeliveryPackage pacote;
+	
 	private Point2D position;
 	private float weightCapacity;
 	private float baseVelocity;
+	
+	private boolean working;
 
+	
+	
 	public static AID[] getDrones(Agent agent) {
 		AID[] drones = new AID[0];
 		DFAgentDescription template = new DFAgentDescription();
@@ -93,7 +100,7 @@ public class Drone extends Agent {
 
 	        setPosition(pa);
 	        setWeightCapacity(weight);
-	       
+	        setWorking(false);
 	    }
 	 
 
@@ -120,5 +127,22 @@ public class Drone extends Agent {
 	public float getWeightCapacity() {
 		return weightCapacity;
 	}
+
+	public DeliveryPackage getPacote() {
+		return pacote;
+	}
+
+	public void setPacote(DeliveryPackage pacote) {
+		this.pacote = pacote;
+	}
+
+	public boolean isWorking() {
+		return working;
+	}
+
+	public void setWorking(boolean working) {
+		this.working = working;
+	}
+	
 
 }

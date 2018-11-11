@@ -1,5 +1,6 @@
 package client;
 
+import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -19,19 +20,28 @@ public class RequestPerfomer extends Behaviour {
 	private int step = 0;
 	private AID[] drones;
 	private String msg = "ENCOMENDA";
+	private DeliveryPackage pacote;
 
 	
-	public RequestPerfomer(AID[] dronesFound) {
+	public RequestPerfomer(AID[] dronesFound, DeliveryPackage pp) {
 		super();
 		this.drones = dronesFound;
+		this.pacote = pp;
 	}
 
 	@Override
 	public void action() {
+		/**
+		Point2D p1 = new Point2D.Double(22,33);
+
+        Client c1 = new Client ();
+        Client c2 = new Client ();
+        c1.setLocation(p1);
 		
 		
-		DeliveryPackage pp= new DeliveryPackage((Client) myAgent, null, 1, 1);
 		
+		//DeliveryPackage pp= new DeliveryPackage((Client) myAgent, c1, 1, 1);
+		*/
 		
 		switch (step) {
 		case 0:
@@ -45,7 +55,7 @@ public class RequestPerfomer extends Behaviour {
 			cfp.setReplyWith("cfp" + System.currentTimeMillis()); // Unique
 			
 			try {
-				cfp.setContentObject( pp);
+				cfp.setContentObject( pacote);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -88,8 +98,16 @@ public class RequestPerfomer extends Behaviour {
 			ACLMessage order = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
 			order.addReceiver(bestDrone);
 			order.setContent(msg);
+			try {
+				order.setContentObject(pacote);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			order.setConversationId("delivery");
 			order.setReplyWith("order" + System.currentTimeMillis());
+			
+
 			myAgent.send(order);
 			// Prepare the template to get the purchase order reply
 			mt = MessageTemplate.and(MessageTemplate.MatchConversationId("delivery"),
@@ -100,11 +118,13 @@ public class RequestPerfomer extends Behaviour {
 			// Receive the purchase order reply
 			reply = myAgent.receive(mt);
 			if (reply != null) {
-				// Purchase order reply received
 				if (reply.getPerformative() == ACLMessage.INFORM) {
 					// Purchase successful. We can terminate
-					System.out.println("Drone picked:" + reply.getSender().getName()+", Distancia = " + bestDistance);
-					myAgent.doDelete();
+					//System.out.println("Client received Inform");
+					System.out.println(myAgent.getLocalName()+": picked drone:" + reply.getSender().getName());
+					//myAgent.doDelete();
+					 ((Client)myAgent).removeDelivery(pacote);
+
 				} else {
 					System.out.println("Attempt failed.");
 				}

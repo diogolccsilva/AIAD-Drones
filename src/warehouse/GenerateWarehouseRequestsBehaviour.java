@@ -15,7 +15,7 @@ import request.*;
 public class GenerateWarehouseRequestsBehaviour extends TickerBehaviour {
 
 	public GenerateWarehouseRequestsBehaviour(Agent a, long period) {
-		super(a, period);
+		super(a, period);/**
 			Point2D p1 = new Point2D.Double(2,3);
 	        Point2D p2 = new Point2D.Double(2,3);
 
@@ -31,7 +31,7 @@ public class GenerateWarehouseRequestsBehaviour extends TickerBehaviour {
 			del.add(pp1);
 			del.add(pp2);
 			((Warehouse)myAgent).setDeliveries(del);
-			
+			*/
 
 	
 	}
@@ -50,10 +50,10 @@ public class GenerateWarehouseRequestsBehaviour extends TickerBehaviour {
 		if (drones.length > 0) {
 			System.out.println(this.myAgent.getLocalName() + ": sending request to drones");
 			//start comunication behaviour here
-			System.out.println(this.myAgent.getLocalName()+"Found the following drone agents:");
+			/**System.out.println(this.myAgent.getLocalName()+"Found the following drone agents:");
 			for (int i = 0; i < drones.length; ++i) {
 				System.out.println(drones[i].getName());
-			}
+			}*/
 			for (DeliveryPackage dp : deliveries) {
 				DeliverRequest request = new DeliverRequest(dp);
 				System.out.println(this.myAgent.getLocalName() + ": looking to send a package");

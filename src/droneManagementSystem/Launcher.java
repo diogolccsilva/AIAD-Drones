@@ -71,7 +71,7 @@ public class Launcher {
 		} catch (StaleProxyException | IOException e) {
 			e.printStackTrace();
 		}
-		/* INIT Warehouses */
+		/* INIT Warehouses 
 		AgentController ac4;
 		try {
 			Utils.readFileWarehouses(Utils.PATH_WAREHOUSES);
@@ -84,7 +84,7 @@ public class Launcher {
 		} catch (StaleProxyException | IOException e) {
 			e.printStackTrace();
 		}
-		
+		*/
 		
 		
 

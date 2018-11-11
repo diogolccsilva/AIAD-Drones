@@ -39,7 +39,7 @@ public class GetRequests extends CyclicBehaviour {
 			Point2D droneCoords = ((Drone)myAgent).getCurrentPosition();
 			double distance;
 			
-			if (weight<cap) {
+			if (weight<cap || ((Drone)myAgent).isWorking()) {
 				// The requested drone is available for sale. Reply with the distance
 				distance = droneCoords.distance(coords);
 				reply.setPerformative(ACLMessage.PROPOSE);
@@ -54,13 +54,61 @@ public class GetRequests extends CyclicBehaviour {
 		}
 		else if ((msg = myAgent.receive(mt2)) != null){
 			ACLMessage reply = msg.createReply();
-
-			// ACCEPT_PROPOSAL Message received. Process it
 			
+			// ACCEPT_PROPOSAL Message received. Process it
+			((Drone)myAgent).setWorking(true);
 			// add working behavior to simulate drone moving
-			// send INFORM in the end
-			reply.setPerformative(ACLMessage.INFORM);
+			// send INFORM in the end4
+			/**
+			try {
+				System.out.println("AQUI pacote na msg accept: "+((DeliveryPackage)msg.getContentObject()));
+			} catch (UnreadableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+*/
+			try {
+				((Drone)myAgent).setPacote(((DeliveryPackage)msg.getContentObject()));
+			} catch (UnreadableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			Point2D droneCoords = ((Drone)myAgent).getCurrentPosition();
+			
+			DeliveryPackage pac = ((Drone)myAgent).getPacote();
+			
+			
+			
+			Point2D dest= pac.getDestination();
+			Point2D src= pac.getSource();
+			
+			double distance1 = droneCoords.distance(src);
 
+			//double m= (droneCoords.getY()-src.getY())/(droneCoords.getX()-src.getX());
+			//double b = src.getY()-m*src.getX();
+			
+			long time1 = (long) (distance1*1000);
+			myAgent.doWait(time1);
+			
+			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time1,1));
+			
+			
+			long time2;
+			Point2D newDroneCoords = ((Drone)myAgent).getCurrentPosition();
+			double distance2 = newDroneCoords.distance(dest);
+			time2= (long) (distance2*1000);
+			
+			//System.out.println("distancia client1-client2: "+distance2);
+			myAgent.doWait(time2);
+
+			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time2,2));
+			reply.setPerformative(ACLMessage.INFORM);
+			
+			
+
+
+			
 			myAgent.send(reply);
 
 		}

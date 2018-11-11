@@ -8,9 +8,14 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import request.*;
+import warehouse.RequestDrone;
+import warehouse.Warehouse;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
+import java.util.Random;
+import java.util.TreeSet;
+import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
 import deliveryPackage.DeliveryPackage;
@@ -21,38 +26,40 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 	public GenerateRequestsBehaviour(Agent a, long period) {
 		super(a, period);
 		// TODO Auto-generated constructor stub
+		
+		
 	}
 
 	@Override
 	protected void onTick() {
-		// randomly generate requests
-		boolean gen = ThreadLocalRandom.current().nextBoolean();
-		if (gen) {
-			Client sender = (Client) this.myAgent;
-			Client receiver = new Client(); // TODO: change this
-			double weight = 0;
-			double size = 0;
-			DeliveryPackage nPackage = new DeliveryPackage(sender, receiver, weight, size);
-			
-			Request request = new PickupRequest(nPackage);
-			//System.out.println(this.myAgent.getLocalName() + ": new request created");
-			
-			AID[] drones = Drone.getDrones(myAgent);
-			if (drones.length > 0) {
-				System.out.println(this.myAgent.getLocalName() + ": sending request to drones");
-				//start comunication behaviour here
-				System.out.println("Found the following drone agents:");
-				for (int i = 0; i < drones.length; ++i) {
-					System.out.println(drones[i].getName());
-				}
-				myAgent.addBehaviour(new RequestPerfomer(drones));
+		// TODO Auto-generated method stub
+				Vector<DeliveryPackage> deliveries = ((Client)myAgent).getDeliveries();
 
-			}
-			else {
-				System.out.println(this.myAgent.getLocalName() + ": no drones were found");
-			}
-			return;
-		}
-		//System.out.println(this.myAgent.getLocalName() + ": no request was generated");
+				if (deliveries.size() < 1) {
+					//System.out.println(this.myAgent.getLocalName() + ": no deliveries were found");
+					myAgent.doDelete();
+					return;
+				}
+				
+				AID[] drones = Drone.getDrones(myAgent);
+				if (drones.length > 0) {
+					System.out.println(this.myAgent.getLocalName() + ": sending request to drones");
+					//start comunication behaviour here
+					/**System.out.println(this.myAgent.getLocalName()+"Found the following drone agents:");
+					for (int i = 0; i < drones.length; ++i) {
+						System.out.println(drones[i].getName());
+					}*/
+					for (DeliveryPackage dp : deliveries) {
+						//System.out.println(this.myAgent.getLocalName() + ": looking to send a package");
+						myAgent.addBehaviour(new RequestPerfomer(drones, dp) );
+
+					}
+
+				}
+				else {
+					System.out.println(this.myAgent.getLocalName() + ": no drones were found");
+				}
+				return;
+	
 	}
 }
