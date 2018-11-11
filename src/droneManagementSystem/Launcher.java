@@ -31,7 +31,7 @@ public class Launcher {
 
 		Profile p4 = new ProfileImpl();
 		p4.setParameter(Profile.CONTAINER_NAME, "Warehouses");
-		ContainerController warehouses = rt.createAgentContainer(p4);
+		//ContainerController warehouses = rt.createAgentContainer(p4);
 
 		AgentController ac1;
 		try {
@@ -86,54 +86,7 @@ public class Launcher {
 		}
 		*/
 		
-		
-
-			
-
 	
-		
-		/**
-		Runtime rt = Runtime.instance();
-
-		Profile p = new ProfileImpl();
-		//p1.setParameter(...);
-		ContainerController cc = rt.createMainContainer(p);
-		
-		Object[] args1 = new Object[0];
-		
-		
-		try {
-			AgentController ag1 = cc.createNewAgent("drone1","droneManagementSystem.Drone",args1);
-			ag1.start();
-		} catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			AgentController ag2 = cc.createNewAgent("drone2","droneManagementSystem.Drone",args1);
-			ag2.start();
-		} catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			AgentController ag2 = cc.createNewAgent("client1","droneManagementSystem.Client",args1);
-			ag2.start();
-		} catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		AgentController ac3;
-		try {
-			ac3 = cc.acceptNewAgent("myRMA", new jade.tools.rma.rma());
-			ac3.start();
-		} catch (StaleProxyException e) {
-			e.printStackTrace();
-		}
-
-		*/
 	}
 
 }

@@ -8,8 +8,6 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import request.*;
-import warehouse.RequestDrone;
-import warehouse.Warehouse;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
