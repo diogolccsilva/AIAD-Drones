@@ -11,6 +11,10 @@ import deliveryPackage.DeliveryPackage;
 
 public class MovingBehaviour extends Behaviour{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private double m;
 	private double b;
 	private int i=0;

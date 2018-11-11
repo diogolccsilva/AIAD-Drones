@@ -32,17 +32,7 @@ public class RequestPerfomer extends Behaviour {
 
 	@Override
 	public void action() {
-		/**
-		Point2D p1 = new Point2D.Double(22,33);
-
-        Client c1 = new Client ();
-        Client c2 = new Client ();
-        c1.setLocation(p1);
 		
-		
-		
-		//DeliveryPackage pp= new DeliveryPackage((Client) myAgent, c1, 1, 1);
-		*/
 		
 		switch (step) {
 		case 0:

@@ -11,10 +11,17 @@ import deliveryPackage.DeliveryPackage;
 
 public class GetRequests extends CyclicBehaviour {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public void action() {
 
 		MessageTemplate mt1 = MessageTemplate.MatchPerformative(ACLMessage.CFP);
 		MessageTemplate mt2 = MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
+		MessageTemplate mt3 = MessageTemplate.MatchPerformative(ACLMessage.REFUSE);
+
 		ACLMessage msg = myAgent.receive(mt1);
 
 		if (msg != null) {
@@ -39,7 +46,7 @@ public class GetRequests extends CyclicBehaviour {
 			Point2D droneCoords = ((Drone)myAgent).getCurrentPosition();
 			double distance;
 			
-			if (weight<cap || ((Drone)myAgent).isWorking()) {
+			if (weight<cap && !((Drone)myAgent).isWorking()) {
 				// The requested drone is available for sale. Reply with the distance
 				distance = droneCoords.distance(coords);
 				reply.setPerformative(ACLMessage.PROPOSE);
@@ -89,10 +96,11 @@ public class GetRequests extends CyclicBehaviour {
 			//double b = src.getY()-m*src.getX();
 			
 			long time1 = (long) (distance1*1000);
-			myAgent.doWait(time1);
+			//myAgent.doWait(time1){
 			
 			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time1,1));
-			
+			((Drone)myAgent).setPosition(src);
+
 			
 			long time2;
 			Point2D newDroneCoords = ((Drone)myAgent).getCurrentPosition();
@@ -100,15 +108,11 @@ public class GetRequests extends CyclicBehaviour {
 			time2= (long) (distance2*1000);
 			
 			//System.out.println("distancia client1-client2: "+distance2);
-			myAgent.doWait(time2);
+			//myAgent.doWait(time2);
 
 			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time2,2));
 			reply.setPerformative(ACLMessage.INFORM);
-			
-			
 
-
-			
 			myAgent.send(reply);
 
 		}

@@ -35,25 +35,29 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 		// TODO Auto-generated method stub
 				Vector<DeliveryPackage> deliveries = ((Client)myAgent).getDeliveries();
 
-				if (deliveries.size() < 1) {
+				if (deliveries.isEmpty()) {
 					//System.out.println(this.myAgent.getLocalName() + ": no deliveries were found");
+					System.out.println(myAgent.getLocalName()+" has no more packages" );
 					myAgent.doDelete();
 					return;
 				}
 				
 				AID[] drones = Drone.getDrones(myAgent);
 				if (drones.length > 0) {
-					System.out.println(this.myAgent.getLocalName() + ": sending request to drones");
+					//System.out.println(this.myAgent.getLocalName() + ": sending request to drones");
 					//start comunication behaviour here
 					/**System.out.println(this.myAgent.getLocalName()+"Found the following drone agents:");
 					for (int i = 0; i < drones.length; ++i) {
 						System.out.println(drones[i].getName());
-					}*/
+					}
 					for (DeliveryPackage dp : deliveries) {
 						//System.out.println(this.myAgent.getLocalName() + ": looking to send a package");
 						myAgent.addBehaviour(new RequestPerfomer(drones, dp) );
 
-					}
+					}*/
+					
+					myAgent.addBehaviour(new RequestPerfomer(drones, deliveries.elementAt(0)) );
+
 
 				}
 				else {
