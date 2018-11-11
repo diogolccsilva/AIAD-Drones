@@ -1,3 +1,5 @@
 drone1;10,10;10
 drone2;4,6;10
 drone3;2,2;10
+drone4;1,1;5
+drone5;22,1;5

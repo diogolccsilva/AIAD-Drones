@@ -4,6 +4,9 @@ package drone;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.WakerBehaviour;
+
+import java.awt.geom.Point2D;
+
 import deliveryPackage.DeliveryPackage;
 
 public class WorkingBehaviour extends WakerBehaviour {
@@ -29,8 +32,8 @@ public class WorkingBehaviour extends WakerBehaviour {
 		if(viagem ==1){
 			 //  System.out.println("Agent "+myAgent.getLocalName()+": It's wakeup-time. Bye...");
 			    DeliveryPackage pac = ((Drone)myAgent).getPacote();
-			   java.awt.geom.Point2D source = pac.getSource();
-			 //  ((Drone)myAgent).setPosition(source);
+			   Point2D source = pac.getSource();
+			   ((Drone)myAgent).setPosition(source);
 			    
 			    System.out.println("Agent "+myAgent.getLocalName()+" got to the client at: "+((Drone)myAgent).getCurrentPosition());
 
