@@ -99,7 +99,7 @@ public class GetRequests extends CyclicBehaviour {
 			//double b = src.getY()-m*src.getX();
 			
 			long time1 = (long) (distance1*1000);
-			//myAgent.doWait(time1){
+			//myAgent.doWait(time1);
 			
 			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time1,1));
 			((Drone)myAgent).setPosition(src);

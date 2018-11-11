@@ -35,7 +35,7 @@ public class Drone extends Agent {
 		template.addServices(sd);
 		try {
 			DFAgentDescription[] result = DFService.search(agent, template);
-			System.out.println("Found the following drone agents:");
+			//System.out.println("Found the following drone agents:");
 			drones = new AID[result.length];
 			for (int i = 0; i < result.length; ++i) {
 				drones[i] = result[i].getName();

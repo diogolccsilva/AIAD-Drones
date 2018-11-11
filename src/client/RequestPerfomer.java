@@ -130,7 +130,7 @@ public class RequestPerfomer extends Behaviour {
 					 ((Client)myAgent).removeDelivery(pacote);
 
 				} else {
-					System.out.println("Attempt failed.");
+					//System.out.println("Attempt failed.");
 				}
 
 				step = 4;
@@ -144,7 +144,7 @@ public class RequestPerfomer extends Behaviour {
 	@Override
 	public boolean done() {
 		if (step == 2 && bestDrone == null) {
-			System.out.println("Attempt failed: " + msg);
+			//System.out.println("Attempt failed: " + msg);
 		}
 		return ((step == 2 && bestDrone == null) || step == 4);
 	}
