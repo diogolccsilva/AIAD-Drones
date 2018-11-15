@@ -14,12 +14,16 @@ public class DeliveryPackage implements Serializable, Comparable<Object> {
 	private Client receiver, sender;
 	private double weight;
 	private double  size; //size in L or dm3
+	private int id;
 	
-	public DeliveryPackage(Client sender, Client receiver, double weight, double size) {
+	private boolean inTransit;
+	
+	public DeliveryPackage(Client sender, Client receiver, double weight, int id) {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.weight = weight;
-		this.size = size;
+		this.id = id;
+		this.inTransit=false;
 	}
 	
 	public Point2D getDestination() {
@@ -36,6 +40,26 @@ public class DeliveryPackage implements Serializable, Comparable<Object> {
 	
 	public double getSize() {
 		return size;
+	}
+	
+	public String getOwner(){
+		return sender.getLocalName();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isInTransit() {
+		return inTransit;
+	}
+
+	public void setInTransit(boolean inTransit) {
+		this.inTransit = inTransit;
 	}
 
 	@Override

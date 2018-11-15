@@ -64,6 +64,8 @@ public class GetRequests extends CyclicBehaviour {
 		}
 		else if ((msg = myAgent.receive(mt2)) != null){
 			ACLMessage reply = msg.createReply();
+
+			if(!((Drone)myAgent).isWorking()){
 			
 			// ACCEPT_PROPOSAL Message received. Process it
 			((Drone)myAgent).setWorking(true);
@@ -100,7 +102,7 @@ public class GetRequests extends CyclicBehaviour {
 			
 			long time1 = (long) (distance1*1000);
 			
-			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time1,1));
+			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time1,1,msg));
 			//((Drone)myAgent).setPosition(src);
 
 			
@@ -109,13 +111,21 @@ public class GetRequests extends CyclicBehaviour {
 			double distance2 = newDroneCoords.distance(dest);
 			time2= (long) (distance2*1000);
 			
-			
-
-			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time2,2));
-			
 			reply.setPerformative(ACLMessage.INFORM);
 
-			myAgent.send(reply);
+			//myAgent.send(reply);
+
+			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time2,2,reply));
+			}
+			else{
+				//send FAILURE
+				
+				reply.setPerformative(ACLMessage.FAILURE);
+				reply.setContent("Fail-> drone ja nao esta disponivel");
+				myAgent.send(reply);
+				System.out.println(myAgent.getLocalName()+" ->mandou fail");
+			}
+			
 
 		}
 		else if((msg = myAgent.receive(mt3)) != null){

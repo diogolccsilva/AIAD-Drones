@@ -35,8 +35,8 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 
 				if (deliveries.isEmpty()) {
 					//System.out.println(this.myAgent.getLocalName() + ": no deliveries were found");
-					System.out.println(myAgent.getLocalName()+" has no more packages" );
-					myAgent.doDelete();
+					//System.out.println(myAgent.getLocalName()+" has no more packages" );
+					//myAgent.doDelete();
 					return;
 				}
 				
@@ -53,8 +53,11 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 						myAgent.addBehaviour(new RequestPerfomer(drones, dp) );
 
 					}*/
-					
-					myAgent.addBehaviour(new RequestPerfomer(drones, deliveries.elementAt(0)) );
+					if(!deliveries.elementAt(0).isInTransit()){
+						myAgent.addBehaviour(new RequestPerfomer(drones, deliveries.elementAt(0)) );
+
+					}
+					//((Client)myAgent).removeDelivery(deliveries.elementAt(0));
 
 
 				}

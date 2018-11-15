@@ -88,7 +88,7 @@ public class RequestPerfomer extends Behaviour {
 			// offer
 			ACLMessage order = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
 			order.addReceiver(bestDrone);
-			order.setContent(msg);
+			order.setContent("i accept --> distance:"+bestDistance);
 			try {
 				order.setContentObject(pacote);
 			} catch (IOException e) {
@@ -98,23 +98,27 @@ public class RequestPerfomer extends Behaviour {
 			order.setConversationId("delivery");
 			order.setReplyWith("order" + System.currentTimeMillis());
 			
+			pacote.setInTransit(true);
+			
 			myAgent.send(order);
 			// Prepare the template to get the purchase order reply
 			mt = MessageTemplate.and(MessageTemplate.MatchConversationId("delivery"),
 					MessageTemplate.MatchInReplyTo(order.getReplyWith()));
-			
+			System.out.println(myAgent.getLocalName()+": picked drone:" + bestDrone.getLocalName());
+
 			////////////////////////////// SEND REFUSE MESSAGE TO OTHERS ///////////////
 			
 			ACLMessage refuse = new ACLMessage(ACLMessage.REFUSE);
 			for(int i=0;i<drones.length;i++){
 				if(drones[i]!= bestDrone){
 					refuse.addReceiver(drones[i]);
-					refuse.setContent(msg);
+					refuse.setContent("nao obrigado");
 					myAgent.send(refuse);
 				}
-				////////////////////////////     END  ///////////////////////////////////
 				
 			}
+			////////////////////////////     END  ///////////////////////////////////
+
 
 			step = 3;
 			break;
@@ -124,13 +128,12 @@ public class RequestPerfomer extends Behaviour {
 			if (reply != null) {
 				if (reply.getPerformative() == ACLMessage.INFORM) {
 					// Purchase successful. We can terminate
-					//System.out.println("Client received Inform");
-					System.out.println(myAgent.getLocalName()+": picked drone:" + reply.getSender().getName());
+					System.out.println(myAgent.getLocalName() +" received Inform-done: " + reply.getSender().getLocalName()+" -->pacote entregue: "+pacote.getId());
 					//myAgent.doDelete();
 					 ((Client)myAgent).removeDelivery(pacote);
 
-				} else {
-					//System.out.println("Attempt failed.");
+				} else if (reply.getPerformative() == ACLMessage.FAILURE){
+					System.out.println(myAgent.getLocalName()+" Got FAIL from: " +reply.getSender().getLocalName());
 				}
 
 				step = 4;

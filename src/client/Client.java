@@ -33,7 +33,7 @@ public class Client extends Agent {
 			System.out.println(getLocalName() +": "+deliveries.size() +":  pacotes");
 			//System.out.println(getLocalName() + deliveries[0]().getWeight());
 
-		addBehaviour(new GenerateRequestsBehaviour(this, rPeriod));
+		addBehaviour(new GenerateRequestsBehaviour(this, 20000));
 	}
 	
 	
@@ -54,11 +54,11 @@ private void setClientInformation() {
 
 public void generatePackages(){
 	
-	int rangeMin=50;
+	int rangeMin=30;
 	int rangeMax=0;
 	
 
-	for(int i=0;i<6;i++){
+	for(int i=0;i<3;i++){
 		Random rx = new Random();
 		Random ry = new Random();
 
@@ -69,7 +69,7 @@ public void generatePackages(){
 		Point2D point = new Point2D.Double(randomX,randomY);
 	    Client c1 = new Client ();
 	    c1.setLocation(point);
-		DeliveryPackage pp1= new DeliveryPackage(this, c1, randomweight, 1);
+		DeliveryPackage pp1= new DeliveryPackage(this, c1, randomweight, i);
 		///this.addDelivery(pp1);
 		//del.add(pp1);
 		
