@@ -106,7 +106,7 @@ public class GetRequests extends CyclicBehaviour {
 			//((Drone)myAgent).setPosition(src);
 
 			
-			long time2;
+			/*long time2;
 			Point2D newDroneCoords = ((Drone)myAgent).getCurrentPosition();
 			double distance2 = newDroneCoords.distance(dest);
 			time2= (long) (distance2*(1000/((Drone)myAgent).getSpeed()));
@@ -115,7 +115,8 @@ public class GetRequests extends CyclicBehaviour {
 
 			//myAgent.send(reply);
 
-			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time2,2,reply));
+			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time2,2,reply));*/
+			
 			}
 			else{
 				//send FAILURE

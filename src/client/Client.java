@@ -33,7 +33,7 @@ public class Client extends Agent {
 			System.out.println(getLocalName() +": "+deliveries.size() +":  pacotes");
 			//System.out.println(getLocalName() + deliveries[0]().getWeight());
 
-		addBehaviour(new GenerateRequestsBehaviour(this, 20000));
+		addBehaviour(new GenerateRequestsBehaviour(this, rPeriod));
 	}
 	
 	

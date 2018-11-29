@@ -43,6 +43,16 @@ public class WorkingBehaviour extends WakerBehaviour {
 			    System.out.println(myAgent.getLocalName()+" got to the client: "+pac.getOwner()+" to pickup package: "+pac.getId());
 
 			    //myAgent.doDelete();
+				long time2;
+				Point2D newDroneCoords = ((Drone)myAgent).getCurrentPosition();
+				double distance2 = newDroneCoords.distance(((Drone)myAgent).getPacote().getDestination());
+				time2= (long) (distance2*(1000/((Drone)myAgent).getSpeed()));
+				
+				msg.setPerformative(ACLMessage.INFORM);
+
+				//myAgent.send(reply);
+
+				myAgent.addBehaviour(new WorkingBehaviour(myAgent,time2,2,msg));
 
 		}
 		else if( viagem ==2){
