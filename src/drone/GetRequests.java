@@ -100,7 +100,7 @@ public class GetRequests extends CyclicBehaviour {
 			//double m= (droneCoords.getY()-src.getY())/(droneCoords.getX()-src.getX());
 			//double b = src.getY()-m*src.getX();
 			
-			long time1 = (long) (distance1*1000);
+			long time1 = (long) (distance1*(1000/((Drone)myAgent).getSpeed()));
 			
 			myAgent.addBehaviour(new WorkingBehaviour(myAgent,time1,1,msg));
 			//((Drone)myAgent).setPosition(src);
@@ -109,7 +109,7 @@ public class GetRequests extends CyclicBehaviour {
 			long time2;
 			Point2D newDroneCoords = ((Drone)myAgent).getCurrentPosition();
 			double distance2 = newDroneCoords.distance(dest);
-			time2= (long) (distance2*1000);
+			time2= (long) (distance2*(1000/((Drone)myAgent).getSpeed()));
 			
 			reply.setPerformative(ACLMessage.INFORM);
 

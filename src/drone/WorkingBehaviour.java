@@ -61,6 +61,7 @@ public class WorkingBehaviour extends WakerBehaviour {
 				//((Drone)myAgent).setPacote(null);
 
 		}
+		((Drone)myAgent).updateBusy(this.elapsedTime);
 	}
 
 

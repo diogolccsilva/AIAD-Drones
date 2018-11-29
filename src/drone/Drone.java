@@ -8,6 +8,7 @@ import request.*;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -24,7 +25,11 @@ public class Drone extends Agent {
 	private float baseVelocity;
 	
 	private boolean working;
-
+	
+	private long start;
+	private long busy = 0;
+	private float busyPercent = 0;
+	private static final long speed = 1;
 	
 	
 	public static AID[] getDrones(Agent agent) {
@@ -55,10 +60,25 @@ public class Drone extends Agent {
 		
 		registerDroneService();
 	
+		start = System.currentTimeMillis();
 		
 		//TODO adding behaviours
 		addBehaviour(new GetRequests());
 		// add behavior to get best warehouse
+		try {
+			Thread.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		addBehaviour(new TickerBehaviour(this, 1000) {
+			protected void onTick() {
+				if (!isWorking()) {
+					busyPercent = 100*busy/(System.currentTimeMillis() - start);
+					System.out.println("Drone busy " + busyPercent + " % of time");
+				}
+			}
+		});
 	}
 	
 	
@@ -142,6 +162,14 @@ public class Drone extends Agent {
 
 	public void setWorking(boolean working) {
 		this.working = working;
+	}
+	
+	public void updateBusy(long time) {
+		this.busy += time;
+	}
+
+	public long getSpeed() {
+		return speed;
 	}
 	
 
