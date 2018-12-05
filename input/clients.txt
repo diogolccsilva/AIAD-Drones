@@ -1,3 +1,12 @@
 Client1;2,2
 Client2;22,22
 Client3;5,3
+client4;44,2
+client5;33,22
+client6;55,3
+Client7;2,2
+Client8;22,22
+Client9;9,3
+client10;17,2
+client11;13,22
+client12;22,3

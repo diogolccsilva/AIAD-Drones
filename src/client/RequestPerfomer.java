@@ -134,6 +134,8 @@ public class RequestPerfomer extends Behaviour {
 
 				} else if (reply.getPerformative() == ACLMessage.FAILURE){
 					System.out.println(myAgent.getLocalName()+" Got FAIL from: " +reply.getSender().getLocalName());
+					pacote.setInTransit(false);
+
 				}
 
 				step = 4;

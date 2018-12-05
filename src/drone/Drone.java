@@ -29,7 +29,7 @@ public class Drone extends Agent {
 	private long start;
 	private long busy = 0;
 	private float busyPercent = 0;
-	private static final long speed = 1;
+	private static final long speed = 5;
 	
 	
 	public static AID[] getDrones(Agent agent) {
@@ -75,7 +75,7 @@ public class Drone extends Agent {
 			protected void onTick() {
 				if (!isWorking()) {
 					busyPercent = 100*busy/(System.currentTimeMillis() - start);
-					//System.out.println("Drone " + getLocalName() + " busy " + busyPercent + " % of time");
+					System.out.println("Drone " + getLocalName() + " busy " + busyPercent + " % of time");
 				}
 			}
 		});

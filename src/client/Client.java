@@ -58,13 +58,13 @@ public void generatePackages(){
 	int rangeMax=0;
 	
 
-	for(int i=0;i<3;i++){
+	for(int i=0;i<1;i++){
 		Random rx = new Random();
 		Random ry = new Random();
 
 		double randomX = rangeMin + (rangeMax - rangeMin) * rx.nextDouble();
 		double randomY = rangeMin + (rangeMax - rangeMin) * ry.nextDouble();
-		double randomweight = (rangeMin + (rangeMax - rangeMin) * ry.nextDouble())/5;
+		double randomweight = (rangeMin + (rangeMax - rangeMin) * ry.nextDouble())/4;
 
 		Point2D point = new Point2D.Double(randomX,randomY);
 	    Client c1 = new Client ();

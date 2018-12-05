@@ -1,3 +1,6 @@
 drone1;10,10;10
 drone2;4,6;10
 drone3;5,2;10
+drone4;33,10;6
+drone5;21,6;5
+drone6;19,2;8
