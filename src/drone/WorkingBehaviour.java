@@ -68,6 +68,7 @@ public class WorkingBehaviour extends WakerBehaviour {
 			    msg.setContent("success");
 			    myAgent.send(msg);
 			    ((Drone)myAgent).setWorking(false);
+			    ((Drone)myAgent).countOrder();
 				//((Drone)myAgent).setPacote(null);
 
 		}

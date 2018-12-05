@@ -1,6 +1,7 @@
 package droneManagementSystem;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import Utils.Utils;
 import jade.core.Agent;
@@ -13,7 +14,7 @@ import jade.wrapper.StaleProxyException;
 
 public class Launcher {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws StaleProxyException {
 		
 
 		Runtime rt = Runtime.instance();
@@ -60,11 +61,13 @@ public class Launcher {
 		
 		/* INIT Clients */
 		AgentController ac3;
+		ArrayList<AgentController> clientControllers = new ArrayList<AgentController>();
 		try {
 			Utils.readFileClients(Utils.PATH_CLIENTS);
 			for (Object[] client : Utils.clientsInformation) {
 				ac3 = clients.createNewAgent((String) client[0], "client.Client", client);
 				ac3.start();
+				clientControllers.add(ac3);
 			}
 			System.out.println("--- Clients ---");
 
@@ -85,6 +88,15 @@ public class Launcher {
 			e.printStackTrace();
 		}
 		*/
+		boolean deleted = false;
+		while (!deleted) {
+			deleted = true;
+			for (AgentController ac : clientControllers)
+				deleted &= (ac.getState().getName() == "Suspended");
+		}
+		
+		drones.kill();
+		clients.kill();
 		
 	
 	}

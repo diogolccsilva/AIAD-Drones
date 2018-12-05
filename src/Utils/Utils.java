@@ -6,8 +6,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+
+import drone.Drone;
 
 public class Utils {
 	
@@ -17,11 +21,14 @@ public class Utils {
 	    public static ArrayList<Object[]> clientsInformation;
 	    public final static String PATH_WAREHOUSES = "./input/warehouses.txt";
 	    public static ArrayList<Object[]> warehousesInformation;
+	    public final static String PATH_OUTPUT_DRONES = "./output/dronedata.csv";
+	    
+	    public static PrintWriter saveData;
 	    
 
 	public Utils() {
 		super();
-		// TODO Auto-generated constructor stub
+		// TODO Auto-generated constructor stub    
 	}
 
 	
@@ -180,6 +187,13 @@ public class Utils {
             System.out.println("Invalid Band information provided.");
         }
     }
+	
+	public synchronized static void saveFileDrones(Drone drone) throws IOException {
+		if (saveData == null)
+			saveData = new PrintWriter(new FileWriter(PATH_OUTPUT_DRONES, true), true);
+		//eliminar
+		saveData.println(drone.getLocalName() + "," + drone.getWeightCapacity() + "," + drone.getOrdersDelivered() + "," + drone.getOcupationRate());
+	}
 	
 	
 

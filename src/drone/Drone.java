@@ -1,8 +1,11 @@
 package drone;
 
 import java.awt.geom.Point2D;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.TreeSet;
 
+import Utils.Utils;
 import deliveryPackage.DeliveryPackage;
 import request.*;
 import jade.core.AID;
@@ -27,6 +30,7 @@ public class Drone extends Agent {
 	private boolean working;
 	
 	private long start;
+	private int ordersDelivered = 0;
 	private long busy = 0;
 	private float busyPercent = 0;
 	private static final long speed = 5;
@@ -105,6 +109,12 @@ public class Drone extends Agent {
 			e.printStackTrace();
 		}
 		System.out.println(getLocalName() + ": drone killed");
+		try {
+			Utils.saveFileDrones(this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void setDroneInformation() {
@@ -148,6 +158,14 @@ public class Drone extends Agent {
 		return weightCapacity;
 	}
 
+	public int getOrdersDelivered() {
+		return ordersDelivered;
+	}
+
+	public float getOcupationRate() {
+		return busyPercent;
+	}
+
 	public DeliveryPackage getPacote() {
 		return pacote;
 	}
@@ -170,6 +188,10 @@ public class Drone extends Agent {
 
 	public long getSpeed() {
 		return speed;
+	}
+
+	public void countOrder() {
+		ordersDelivered++;		
 	}
 	
 
