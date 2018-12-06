@@ -17,98 +17,91 @@ import jade.util.leap.ArrayList;
 public class Client extends Agent {
 
 	private Point2D location;
-	private Vector<DeliveryPackage> deliveries =  new Vector<DeliveryPackage>();
+	private Vector<DeliveryPackage> deliveries = new Vector<DeliveryPackage>();
 
-	//AID[] drones;
-
+	// AID[] drones;
 
 	public void setup() {
-		System.out.println(getLocalName() + ": client created");
+		//System.out.println(getLocalName() + ": client created");
 		setClientInformation();
-		//System.out.println(location + ": client location");
+		// System.out.println(location + ": client location");
 
 		generatePackages();
-		int rPeriod = ThreadLocalRandom.current().nextInt(1000,1500);
-		
-			System.out.println(getLocalName() +": "+deliveries.size() +":  pacotes");
-			//System.out.println(getLocalName() + deliveries[0]().getWeight());
+		int rPeriod = ThreadLocalRandom.current().nextInt(1000, 1500);
+
+		System.out.println(getLocalName() + ": " + deliveries.size() + ":  pacotes");
+		// System.out.println(getLocalName() + deliveries[0]().getWeight());
 
 		addBehaviour(new GenerateRequestsBehaviour(this, rPeriod));
 	}
-	
-	
-private void setClientInformation() {
-		
-			int x = (int)getArguments()[1];
-			int y = (int)getArguments()[2];
-					
-			double dx=(double)x;
-			double dy=(double)y;
-			
-			Point2D pa = new Point2D.Double(dx, dy);
-			
-			setLocation(pa);
-	        
-	       
-	    }
 
-public void generatePackages(){
-	
-	int rangeMin=30;
-	int rangeMax=0;
-	
+	private void setClientInformation() {
 
-	for(int i=0;i<1;i++){
-		Random rx = new Random();
-		Random ry = new Random();
+		int x = (int) getArguments()[1];
+		int y = (int) getArguments()[2];
 
-		double randomX = rangeMin + (rangeMax - rangeMin) * rx.nextDouble();
-		double randomY = rangeMin + (rangeMax - rangeMin) * ry.nextDouble();
-		double randomweight = (rangeMin + (rangeMax - rangeMin) * ry.nextDouble())/4;
+		double dx = (double) x;
+		double dy = (double) y;
 
-		Point2D point = new Point2D.Double(randomX,randomY);
-	    Client c1 = new Client ();
-	    c1.setLocation(point);
-		DeliveryPackage pp1= new DeliveryPackage(this, c1, randomweight, i);
-		///this.addDelivery(pp1);
-		//del.add(pp1);
-		
-		addDelivery(pp1);
-		
+		Point2D pa = new Point2D.Double(dx, dy);
+
+		setLocation(pa);
+
 	}
-	//setDeliveries(del);
 
-}
+	public void generatePackages() {
+
+		int rangeMin = 30;
+		int rangeMax = 0;
+
+		for (int i = 0; i < 1; i++) {
+			Random rx = new Random();
+			Random ry = new Random();
+
+			double randomX = rangeMin + (rangeMax - rangeMin) * rx.nextDouble();
+			double randomY = rangeMin + (rangeMax - rangeMin) * ry.nextDouble();
+			double randomweight = (rangeMin + (rangeMax - rangeMin) * ry.nextDouble()) / 4;
+
+			Point2D point = new Point2D.Double(randomX, randomY);
+			Client c1 = new Client();
+			c1.setLocation(point);
+			DeliveryPackage pp1 = new DeliveryPackage(this, c1, randomweight, i);
+			/// this.addDelivery(pp1);
+			// del.add(pp1);
+
+			addDelivery(pp1);
+
+		}
+		// setDeliveries(del);
+
+	}
 
 	public void takeDown() {
 		System.out.println(getLocalName() + ": client killed");
 	}
-	
+
 	public Point2D getLocation() {
 		return location;
 	}
 
-
 	public void setLocation(Point2D location) {
 		this.location = location;
 	}
+
 	public Vector<DeliveryPackage> getDeliveries() {
 		return deliveries;
 	}
-	
+
 	public void setDeliveries(Vector<DeliveryPackage> deliveries) {
 		this.deliveries = deliveries;
 	}
-	
+
 	public void addDelivery(DeliveryPackage dp) {
 		deliveries.add(dp);
 	}
+
 	public void removeDelivery(DeliveryPackage dp) {
 		this.deliveries.remove(dp);
 	}
-
-
-	
-	
 
 }
