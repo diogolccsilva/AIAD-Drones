@@ -60,7 +60,7 @@ public class Launcher {
 		} */
 		
 		Utils.generateRandomDrones();
-
+			
 		for (Object[] drone : Utils.dronesInformation) {
 			ac2 = drones.createNewAgent( drone[0].toString(), "drone.Drone", drone);
 			//System.out.println("Drones args: "+drone[0].toString()+","+drone[1]+","+drone[2]+","+drone[3]);

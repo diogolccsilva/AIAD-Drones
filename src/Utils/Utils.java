@@ -184,6 +184,9 @@ public class Utils {
 	}
 
 	public static int[] generateRandomDrones() {
+		
+		dronesInformation = new ArrayList<>();
+
 		int n = 0;
 		int nd[] = { 0, 0, 0 };
 		// gena pelo menos 1 drone de cada tipo
@@ -233,6 +236,10 @@ public class Utils {
 	}
 
 	public static int generateRandomClients() {
+		
+		clientsInformation = new ArrayList<>();
+
+		
 		int n = 0;
 		Random r = new Random();
 		n = r.nextInt(100) + 1; // maximo 100 clientes
