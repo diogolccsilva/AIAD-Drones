@@ -43,6 +43,7 @@ public class Launcher {
 		}
 
 		/* INIT Drones */
+		System.out.println("--- Drones ---");
 		AgentController ac2;
 		/*try {
 			Utils.readFileDrones(Utils.PATH_DRONES);
@@ -72,9 +73,9 @@ public class Launcher {
 			//System.out.println("Drones args: "+drone[0].toString()+","+drone[1]+","+drone[2]+","+drone[3]);
 			ac2.start();
 		}
-		System.out.println("\n--- Drones ---");
 		
 		/* INIT Clients */
+		System.out.println("/n--- Clients ---");
 		AgentController ac3;
 		ArrayList<AgentController> clientControllers = new ArrayList<AgentController>();
 		/*try {
@@ -98,7 +99,6 @@ public class Launcher {
 			ac3.start();
 			clientControllers.add(ac3);
 		}
-		System.out.println("--- Clients ---");
 		
 		/* INIT Warehouses 
 		AgentController ac4;
