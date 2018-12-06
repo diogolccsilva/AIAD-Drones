@@ -75,7 +75,7 @@ public class Launcher {
 		}
 		
 		/* INIT Clients */
-		System.out.println("/n--- Clients ---");
+		System.out.println("\n--- Clients ---");
 		AgentController ac3;
 		ArrayList<AgentController> clientControllers = new ArrayList<AgentController>();
 		/*try {
