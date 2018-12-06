@@ -59,8 +59,14 @@ public class Launcher {
 			e.printStackTrace();
 		} */
 		
-		Utils.generateRandomDrones();
-			
+		int dn[] = Utils.generateRandomDrones();
+		int dsum = dn[0] + dn[1] + dn[2];
+		
+		System.out.println("Generated " + dsum + " drones");
+		System.out.println("Generated " + dn[0] + " drones of type A");
+		System.out.println("Generated " + dn[1] + " drones of type B");
+		System.out.println("Generated " + dn[2] + " drones of type C");
+		
 		for (Object[] drone : Utils.dronesInformation) {
 			ac2 = drones.createNewAgent( drone[0].toString(), "drone.Drone", drone);
 			//System.out.println("Drones args: "+drone[0].toString()+","+drone[1]+","+drone[2]+","+drone[3]);
@@ -71,7 +77,7 @@ public class Launcher {
 		/* INIT Clients */
 		AgentController ac3;
 		ArrayList<AgentController> clientControllers = new ArrayList<AgentController>();
-		/**try {
+		/*try {
 			Utils.readFileClients(Utils.PATH_CLIENTS);
 			for (Object[] client : Utils.clientsInformation) {
 				ac3 = clients.createNewAgent((String) client[0], "client.Client", client);
@@ -84,7 +90,9 @@ public class Launcher {
 			e.printStackTrace();
 		}*/
 		
-		Utils.generateRandomClients();
+		int cn = Utils.generateRandomClients();
+		System.out.println("Generated " + cn + " clients");
+		
 		for (Object[] client : Utils.clientsInformation) {
 			ac3 = clients.createNewAgent((String) client[0], "client.Client", client);
 			ac3.start();
