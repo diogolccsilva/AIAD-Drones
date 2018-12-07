@@ -110,7 +110,7 @@ public class Drone extends Agent {
 		}
 		System.out.println(getLocalName() + ": drone killed");
 		try {
-			Utils.saveFileDrones(this);
+			Utils.addOcupationRate(this);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

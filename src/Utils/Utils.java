@@ -23,8 +23,11 @@ public class Utils {
 	public final static String PATH_WAREHOUSES = "./input/warehouses.txt";
 	public static ArrayList<Object[]> warehousesInformation;
 	public final static String PATH_OUTPUT_DRONES = "./output/dronedata.csv";
+	private static ArrayList<Float> occupationRates;
+	private static int nd[] = { 0, 0, 0 };
+	private static int totalPackages = 0;
 
-	public static PrintWriter saveData;
+	private static PrintWriter saveData;
 
 	public Utils() {
 		super();
@@ -175,12 +178,21 @@ public class Utils {
 		}
 	}
 
-	public synchronized static void saveFileDrones(Drone drone) throws IOException {
+	public synchronized static void addOcupationRate(Drone drone) throws IOException {
+		if (occupationRates == null)
+			occupationRates = new ArrayList<Float>();
+		occupationRates.add(drone.getOcupationRate());
+	}
+	
+	public static void saveFileDrones() throws IOException {
 		if (saveData == null)
 			saveData = new PrintWriter(new FileWriter(PATH_OUTPUT_DRONES, true), true);
-		// eliminar
-		saveData.println(drone.getLocalName() + "," + drone.getWeightCapacity() + "," + drone.getOrdersDelivered() + ","
-				+ drone.getOcupationRate());
+
+		float avg = 0;
+		for (float r : occupationRates)
+			avg += r;
+		avg /= occupationRates.size();
+		saveData.println(nd[0] + "," + nd[1] + "," + nd[2] + "," + clientsInformation.size() + "," + totalPackages + "," + avg);
 	}
 
 	public static int[] generateRandomDrones() {
@@ -188,7 +200,6 @@ public class Utils {
 		dronesInformation = new ArrayList<>();
 
 		int n = 0;
-		int nd[] = { 0, 0, 0 };
 		// gena pelo menos 1 drone de cada tipo
 		for (int i = 0; i < 3; i++) {
 			Object[] drone = new Object[4];
@@ -244,14 +255,18 @@ public class Utils {
 		Random r = new Random();
 		n = r.nextInt(100) + 1; // maximo 100 clientes
 		for (int i = 0;i<n;i++) {
-			Object[] client = new Object[3];
+			Object[] client = new Object[4];
 			
 			int x = r.nextInt(30) + 1;
 			int y = r.nextInt(30) + 1;
+			int nPacotes = r.nextInt(3) + 1;
 			
 			client[0] = "cliente" + i;
 			client[1] = x;
 			client[2] = y;
+			client[3] = nPacotes;
+			
+			totalPackages += nPacotes;
 
 			clientsInformation.add(client);
 		}

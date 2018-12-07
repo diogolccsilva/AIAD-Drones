@@ -14,7 +14,7 @@ import jade.wrapper.StaleProxyException;
 
 public class Launcher {
 
-	public static void main(String[] args) throws StaleProxyException {
+	public static void main(String[] args) throws StaleProxyException, InterruptedException, IOException {
 		
 
 		Runtime rt = Runtime.instance();
@@ -123,6 +123,9 @@ public class Launcher {
 		
 		drones.kill();
 		clients.kill();
+		
+		Thread.sleep(700);
+		Utils.saveFileDrones();
 		
 	
 	}

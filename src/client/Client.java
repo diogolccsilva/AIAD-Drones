@@ -18,7 +18,7 @@ public class Client extends Agent {
 
 	private Point2D location;
 	private Vector<DeliveryPackage> deliveries =  new Vector<DeliveryPackage>();
-
+	private int numberPackages;
 	//AID[] drones;
 
 
@@ -41,6 +41,7 @@ private void setClientInformation() {
 		
 			int x = (int)getArguments()[1];
 			int y = (int)getArguments()[2];
+			numberPackages = (int)getArguments()[3];
 					
 			double dx=(double)x;
 			double dy=(double)y;
@@ -58,7 +59,7 @@ public void generatePackages(){
 	int rangeMax=0;
 	
 
-	for(int i=0;i<1;i++){
+	for(int i=0;i<numberPackages;i++){
 		Random rx = new Random();
 		Random ry = new Random();
 
