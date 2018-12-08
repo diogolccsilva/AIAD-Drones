@@ -35,51 +35,48 @@ public class Client extends Agent {
 
 		addBehaviour(new GenerateRequestsBehaviour(this, rPeriod));
 	}
-	
-	
-private void setClientInformation() {
 		
-			int x = (int)getArguments()[1];
-			int y = (int)getArguments()[2];
+	private void setClientInformation() {
+		
+			int x = (int) getArguments()[1];
+			int y = (int) getArguments()[2];
 			numberPackages = (int)getArguments()[3];
 					
-			double dx=(double)x;
-			double dy=(double)y;
+			double dx = (double) x;
+			double dy = (double) y;
 			
 			Point2D pa = new Point2D.Double(dx, dy);
 			
 			setLocation(pa);
-	        
-	       
+	        	       
 	    }
 
-public void generatePackages(){
-	
-	int rangeMin=30;
-	int rangeMax=0;
-	
-
-	for(int i=0;i<numberPackages;i++){
-		Random rx = new Random();
-		Random ry = new Random();
-
-		double randomX = rangeMin + (rangeMax - rangeMin) * rx.nextDouble();
-		double randomY = rangeMin + (rangeMax - rangeMin) * ry.nextDouble();
-		double randomweight = (rangeMin + (rangeMax - rangeMin) * ry.nextDouble())/4;
-
-		Point2D point = new Point2D.Double(randomX,randomY);
-	    Client c1 = new Client ();
-	    c1.setLocation(point);
-		DeliveryPackage pp1= new DeliveryPackage(this, c1, randomweight, i);
-		///this.addDelivery(pp1);
-		//del.add(pp1);
+	public void generatePackages(){
 		
-		addDelivery(pp1);
+		int rangeMin=30;
+		int rangeMax=0;
 		
+		for(int i=0;i<numberPackages;i++){
+			Random rx = new Random();
+			Random ry = new Random();
+	
+			double randomX = rangeMin + (rangeMax - rangeMin) * rx.nextDouble();
+			double randomY = rangeMin + (rangeMax - rangeMin) * ry.nextDouble();
+			double randomweight = (rangeMin + (rangeMax - rangeMin) * ry.nextDouble())/4;
+	
+			Point2D point = new Point2D.Double(randomX,randomY);
+		    Client c1 = new Client ();
+		    c1.setLocation(point);
+			DeliveryPackage pp1= new DeliveryPackage(this, c1, randomweight, i);
+			///this.addDelivery(pp1);
+			//del.add(pp1);
+			
+			addDelivery(pp1);
+			
+		}
+		//setDeliveries(del);
+	
 	}
-	//setDeliveries(del);
-
-}
 
 	public void takeDown() {
 		System.out.println(getLocalName() + ": client killed");

@@ -18,24 +18,23 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class Drone extends Agent {
-	
+
 	private TreeSet<Request> requests;
-	
+
 	private DeliveryPackage pacote;
-	
+
 	private Point2D position;
 	private float weightCapacity;
 	private float baseVelocity;
-	
+
 	private boolean working;
-	
+
 	private long start;
 	private int ordersDelivered = 0;
 	private long busy = 0;
 	private float busyPercent = 0;
 	private static final long speed = 5;
-	
-	
+
 	public static AID[] getDrones(Agent agent) {
 		AID[] drones = new AID[0];
 		DFAgentDescription template = new DFAgentDescription();
@@ -44,7 +43,7 @@ public class Drone extends Agent {
 		template.addServices(sd);
 		try {
 			DFAgentDescription[] result = DFService.search(agent, template);
-			//System.out.println("Found the following drone agents:");
+			// System.out.println("Found the following drone agents:");
 			drones = new AID[result.length];
 			for (int i = 0; i < result.length; ++i) {
 				drones[i] = result[i].getName();
@@ -54,19 +53,18 @@ public class Drone extends Agent {
 		}
 		return drones;
 	}
-	
+
 	public void setup() {
-		
-		System.out.println(getLocalName() + ": drone created");
-	
+
+		// System.out.println(getLocalName() + ": drone created");
+
 		setDroneInformation();
-	
-		
+
 		registerDroneService();
-	
+
 		start = System.currentTimeMillis();
-		
-		//TODO adding behaviours
+
+		// TODO adding behaviours
 		addBehaviour(new GetRequests());
 		// add behavior to get best warehouse
 		try {
@@ -78,16 +76,15 @@ public class Drone extends Agent {
 		addBehaviour(new TickerBehaviour(this, 1000) {
 			protected void onTick() {
 				if (!isWorking()) {
-					busyPercent = 100*busy/(System.currentTimeMillis() - start);
+					busyPercent = 100 * busy / (System.currentTimeMillis() - start);
 					System.out.println("Drone " + getLocalName() + " busy " + busyPercent + " % of time");
 				}
 			}
 		});
 	}
-	
-	
-	public void registerDroneService(){
-		
+
+	public void registerDroneService() {
+
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
@@ -101,7 +98,7 @@ public class Drone extends Agent {
 		}
 
 	}
-	
+
 	public void takeDown() {
 		try {
 			DFService.deregister(this);
@@ -116,23 +113,22 @@ public class Drone extends Agent {
 			e.printStackTrace();
 		}
 	}
-	
-	private void setDroneInformation() {
-		
-		int weight = (int)getArguments()[3];
-			int x = (int)getArguments()[1];
-			int y = (int)getArguments()[2];
-					
-			double dx=(double)x;
-			double dy=(double)y;
-			
-			Point2D pa = new Point2D.Double(dx, dy);
 
-	        setPosition(pa);
-	        setWeightCapacity(weight);
-	        setWorking(false);
-	    }
-	 
+	private void setDroneInformation() {
+
+		int weight = (int) getArguments()[3];
+		int x = (int) getArguments()[1];
+		int y = (int) getArguments()[2];
+
+		double dx = (double) x;
+		double dy = (double) y;
+
+		Point2D pa = new Point2D.Double(dx, dy);
+
+		setPosition(pa);
+		setWeightCapacity(weight);
+		setWorking(false);
+	}
 
 	public void setRequests(TreeSet<Request> requests) {
 		this.requests = requests;
@@ -153,7 +149,7 @@ public class Drone extends Agent {
 	public Point2D getCurrentPosition() {
 		return position;
 	}
-	
+
 	public float getWeightCapacity() {
 		return weightCapacity;
 	}
@@ -181,7 +177,7 @@ public class Drone extends Agent {
 	public void setWorking(boolean working) {
 		this.working = working;
 	}
-	
+
 	public void updateBusy(long time) {
 		this.busy += time;
 	}
@@ -191,8 +187,7 @@ public class Drone extends Agent {
 	}
 
 	public void countOrder() {
-		ordersDelivered++;		
+		ordersDelivered++;
 	}
-	
 
 }
