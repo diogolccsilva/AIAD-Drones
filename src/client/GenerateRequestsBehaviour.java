@@ -35,7 +35,7 @@ public class GenerateRequestsBehaviour extends TickerBehaviour {
 
 				if (deliveries.isEmpty()) {
 					//System.out.println(this.myAgent.getLocalName() + ": no deliveries were found");
-					System.out.println(myAgent.getLocalName()+" has no more packages" );
+					//System.out.println(myAgent.getLocalName()+" has no more packages" );
 					myAgent.doSuspend();
 					return;
 				}

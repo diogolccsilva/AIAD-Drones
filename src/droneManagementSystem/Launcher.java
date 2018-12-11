@@ -123,9 +123,11 @@ public class Launcher {
 		
 		drones.kill();
 		clients.kill();
-		
+		mainContainer.kill();
+		rt.shutDown();
 		Thread.sleep(700);
 		Utils.saveFileDrones();
+
 		
 	
 	}

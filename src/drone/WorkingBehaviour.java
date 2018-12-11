@@ -40,7 +40,7 @@ public class WorkingBehaviour extends WakerBehaviour {
 			   ((Drone)myAgent).setPosition(source);
 			   //+((Drone)myAgent).getCurrentPosition()
 			    
-			    System.out.println(myAgent.getLocalName()+" got to the client: "+pac.getOwner()+" to pickup package: "+pac.getId());
+			   // System.out.println(myAgent.getLocalName()+" got to the client: "+pac.getOwner()+" to pickup package: "+pac.getId());
 
 			    //myAgent.doDelete();
 				long time2;
@@ -64,7 +64,7 @@ public class WorkingBehaviour extends WakerBehaviour {
 			   java.awt.geom.Point2D dest = pac.getDestination();
 			   ((Drone)myAgent).setPosition(dest);
 			    
-			    System.out.println(myAgent.getLocalName()+" got to the destination of the package: "+pac.getId()+"from "+pac.getOwner()+" at "+((Drone)myAgent).getCurrentPosition());
+			   // System.out.println(myAgent.getLocalName()+" got to the destination of the package: "+pac.getId()+"from "+pac.getOwner()+" at "+((Drone)myAgent).getCurrentPosition());
 			    msg.setContent("success");
 			    myAgent.send(msg);
 			    ((Drone)myAgent).setWorking(false);

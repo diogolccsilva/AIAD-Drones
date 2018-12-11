@@ -104,7 +104,7 @@ public class RequestPerfomer extends Behaviour {
 			// Prepare the template to get the purchase order reply
 			mt = MessageTemplate.and(MessageTemplate.MatchConversationId("delivery"),
 					MessageTemplate.MatchInReplyTo(order.getReplyWith()));
-			System.out.println(myAgent.getLocalName()+": picked drone:" + bestDrone.getLocalName());
+			//System.out.println(myAgent.getLocalName()+": picked drone:" + bestDrone.getLocalName());
 
 			////////////////////////////// SEND REFUSE MESSAGE TO OTHERS ///////////////
 			
@@ -128,12 +128,12 @@ public class RequestPerfomer extends Behaviour {
 			if (reply != null) {
 				if (reply.getPerformative() == ACLMessage.INFORM) {
 					// Purchase successful. We can terminate
-					System.out.println(myAgent.getLocalName() +" received Inform-done: " + reply.getSender().getLocalName()+" -->pacote entregue: "+pacote.getId());
+					//System.out.println(myAgent.getLocalName() +" received Inform-done: " + reply.getSender().getLocalName()+" -->pacote entregue: "+pacote.getId());
 					//myAgent.doDelete();
 					 ((Client)myAgent).removeDelivery(pacote);
 
 				} else if (reply.getPerformative() == ACLMessage.FAILURE){
-					System.out.println(myAgent.getLocalName()+" Got FAIL from: " +reply.getSender().getLocalName());
+					//System.out.println(myAgent.getLocalName()+" Got FAIL from: " +reply.getSender().getLocalName());
 					pacote.setInTransit(false);
 
 				}

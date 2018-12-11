@@ -124,7 +124,7 @@ public class GetRequests extends CyclicBehaviour {
 				reply.setPerformative(ACLMessage.FAILURE);
 				reply.setContent("Fail-> drone ja nao esta disponivel");
 				myAgent.send(reply);
-				System.out.println(myAgent.getLocalName()+" ->mandou fail");
+				//System.out.println(myAgent.getLocalName()+" ->mandou fail");
 			}
 			
 

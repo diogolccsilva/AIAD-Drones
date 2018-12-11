@@ -192,6 +192,7 @@ public class Utils {
 		for (float r : occupationRates)
 			avg += r;
 		avg /= occupationRates.size();
+		avg= Math.round(avg);
 		saveData.println(nd[0] + "," + nd[1] + "," + nd[2] + "," + clientsInformation.size() + "," + totalPackages + "," + avg);
 	}
 

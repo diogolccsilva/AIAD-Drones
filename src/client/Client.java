@@ -23,14 +23,14 @@ public class Client extends Agent {
 
 
 	public void setup() {
-		System.out.println(getLocalName() + ": client created");
+		//System.out.println(getLocalName() + ": client created");
 		setClientInformation();
 		//System.out.println(location + ": client location");
 
 		generatePackages();
 		int rPeriod = ThreadLocalRandom.current().nextInt(1000,1500);
 		
-			System.out.println(getLocalName() +": "+deliveries.size() +":  pacotes");
+			//System.out.println(getLocalName() +": "+deliveries.size() +":  pacotes");
 			//System.out.println(getLocalName() + deliveries[0]().getWeight());
 
 		addBehaviour(new GenerateRequestsBehaviour(this, rPeriod));
@@ -62,7 +62,7 @@ public class Client extends Agent {
 	
 			double randomX = rangeMin + (rangeMax - rangeMin) * rx.nextDouble();
 			double randomY = rangeMin + (rangeMax - rangeMin) * ry.nextDouble();
-			double randomweight = (rangeMin + (rangeMax - rangeMin) * ry.nextDouble())/4;
+			double randomweight = (rangeMin + (rangeMax - rangeMin) * ry.nextDouble())/2.5;
 	
 			Point2D point = new Point2D.Double(randomX,randomY);
 		    Client c1 = new Client ();
@@ -79,7 +79,7 @@ public class Client extends Agent {
 	}
 
 	public void takeDown() {
-		System.out.println(getLocalName() + ": client killed");
+		//System.out.println(getLocalName() + ": client killed");
 	}
 	
 	public Point2D getLocation() {
