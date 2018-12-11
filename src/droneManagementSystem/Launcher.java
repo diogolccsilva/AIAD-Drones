@@ -114,8 +114,6 @@ public class Launcher {
 		Thread.sleep(700);
 		Utils.saveFileDrones();
 		rt.shutDown();
-
-		
 		
 	}
 
