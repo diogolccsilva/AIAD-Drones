@@ -14,7 +14,7 @@ public class Loop {
 			Launcher launch = new Launcher();
 
 			System.out.println("Iteracao: "+i);
-			launch.main(args);
+			launch.run();
 			
 		}
 	}

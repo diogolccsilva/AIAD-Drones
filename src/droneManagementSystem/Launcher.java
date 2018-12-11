@@ -14,7 +14,7 @@ import jade.wrapper.StaleProxyException;
 
 public class Launcher {
 
-	public static void main(String[] args) throws StaleProxyException, InterruptedException, IOException {
+	public void run() throws StaleProxyException, InterruptedException, IOException {
 		
 
 		Runtime rt = Runtime.instance();
@@ -100,20 +100,7 @@ public class Launcher {
 			clientControllers.add(ac3);
 		}
 		
-		/* INIT Warehouses 
-		AgentController ac4;
-		try {
-			Utils.readFileWarehouses(Utils.PATH_WAREHOUSES);
-			for (Object[] warehouse : Utils.warehousesInformation) {
-				ac4 = warehouses.createNewAgent((String) warehouse[0], "warehouse.Warehouse", warehouse);
-				ac4.start();
-			}
-			System.out.println("\n--- Warehouses ---\n");
-
-		} catch (StaleProxyException | IOException e) {
-			e.printStackTrace();
-		}
-		*/
+		
 		boolean deleted = false;
 		while (!deleted) {
 			deleted = true;
@@ -124,12 +111,12 @@ public class Launcher {
 		drones.kill();
 		clients.kill();
 		mainContainer.kill();
-		rt.shutDown();
 		Thread.sleep(700);
 		Utils.saveFileDrones();
+		rt.shutDown();
 
 		
-	
+		
 	}
 
 }
