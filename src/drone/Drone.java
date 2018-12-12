@@ -77,7 +77,7 @@ public class Drone extends Agent {
 			protected void onTick() {
 				if (!isWorking()) {
 					busyPercent = 100 * busy / (System.currentTimeMillis() - start);
-					System.out.println("Drone " + getLocalName() + " busy " + busyPercent + " % of time");
+					//System.out.println("Drone " + getLocalName() + " busy " + busyPercent + " % of time");
 				}
 			}
 		});
@@ -105,7 +105,7 @@ public class Drone extends Agent {
 		} catch (FIPAException e) {
 			e.printStackTrace();
 		}
-		System.out.println(getLocalName() + ": drone killed");
+		//System.out.println(getLocalName() + ": drone killed");
 		try {
 			Utils.addOcupationRate(this);
 		} catch (IOException e) {
