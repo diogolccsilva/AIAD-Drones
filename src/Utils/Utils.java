@@ -201,6 +201,7 @@ public class Utils {
 		 nd=reset;
 
 		 occupationRates = new ArrayList<Float>();
+		 saveData.close();
 	}
 
 	public static int[] generateRandomDrones() {
