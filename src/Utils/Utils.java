@@ -200,7 +200,7 @@ public class Utils {
 		 int reset[] = { 0, 0, 0 };
 		 nd=reset;
 
-		
+		 occupationRates = new ArrayList<Float>();
 	}
 
 	public static int[] generateRandomDrones() {
