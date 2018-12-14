@@ -33,7 +33,7 @@ public class Drone extends Agent {
 	private int ordersDelivered = 0;
 	private long busy = 0;
 	private float busyPercent = 0;
-	private static final long speed = 5;
+	private static final long speed = 15;
 
 	public static AID[] getDrones(Agent agent) {
 		AID[] drones = new AID[0];
